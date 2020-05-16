@@ -19,3 +19,9 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+
+# "THIS FILE SHOULD NOT BE VERSION CONTROLLED"
+/static/sw.js
+
+# Others
+/.nuxt/
