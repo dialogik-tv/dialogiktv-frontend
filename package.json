@@ -1,7 +1,7 @@
 {
     "name": "dialogiktv-frontend",
-    "version": "1.0.0",
-    "description": "The dialogikTV Frontend Nuxt.js application",
+    "version": "0.0.1",
+    "description": "The dialogikTV frontend Nuxt.js application",
     "author": "Moritz",
     "private": true,
     "scripts": {
