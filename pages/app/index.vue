@@ -8,7 +8,7 @@
                     dialogikTV
                 </h1>
                 <h2 class="subtitle">
-                    The dialogikTV frontend Nuxt.js application
+                    The dialogikTV Frontend Nuxt.js application
                 </h2>
                 <div class="links">
                     <a href="https://nuxtjs.org/" target="_blank" class="button--green">
