@@ -23,7 +23,9 @@ export default {
         };
     },
     async fetch() {
-        const { data } = await this.$axios.get('https://dialogiktv-api.herokuapp.com/api/tools');
+        const url = process.env.API_BASE + '/api/tools';
+        console.log(url);
+        const { data } = await this.$axios.get(url);
         this.tools = data;
     },
     head () {
