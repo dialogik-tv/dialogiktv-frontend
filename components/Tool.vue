@@ -7,23 +7,29 @@
         <p v-else-if="$fetchState.error">Error while fetching tools: {{ $fetchState.error.message }}</p>
         <div v-else>
             <div class="card p-5">
-                <h1>{{ tool.title }}</h1>
+                <h1 class="mb-0">{{ tool.title }}</h1>
                 <div class="row">
                     <div class="col">
+                        <div class="text-muted">
+                            <small>
+                                erstellt von <span class="text-dark">{{ tool.User.username }}</span>
+                                am <span class="text-dark">{{ tool.createdAt }}</span>
+                            </small>
+                        </div>
                         <div class="mb-3">
                             <span class="badge badge-secondary">Videoproduktion</span>
                             <span class="badge badge-secondary">Broadcasting</span>
                         </div>
 
                         <p class="lead">{{ tool.description }}</p>
-                        <div>
-                            <a class="btn btn-danger" target="_blank" v-bind:href="tool.link">Download ↗</a>
-                        </div>
                     </div>
-                    <div class="col-3">
-                        <span class="text-muted">Anbieter</span> {{ tool.vendor }}
+                    <div class="col-3 text-muted">
                         <div>
-                            <a class="btn btn-sm btn-outline-secondary" target="_blank" v-bind:href="tool.vendorLink">zum Anbieter ↗</a>
+                            <small>Anbieter</small>
+                            <div><a class="btn btn-sm btn-outline-secondary" target="_blank" v-bind:href="tool.vendorLink">{{ tool.vendor }} ↗</a></div>
+                        </div>
+                        <div class="border-top mt-3 pt-3">
+                            <a class="btn btn-danger" target="_blank" v-bind:href="tool.link">zum Download ↗</a>
                         </div>
                     </div>
                 </div>
