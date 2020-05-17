@@ -1,11 +1,11 @@
 <template>
-    <div class="mt-5 pt-5">
+    <div class="mt-5 pt-3">
         <h1>Tools</h1>
         <p v-if="$fetchState.pending">Fetching posts...</p>
         <p v-else-if="$fetchState.error">Error while fetching tools: {{ $fetchState.error.message }}</p>
         <ul v-else class="list-group">
             <li class="list-group-item" v-for="tool of tools" :key="tool.slug">
-                <n-link :to="`/app/tool/${tool.slug}`">{{ tool.title }}</n-link>
+                <n-link :to="`/app/tool/${tool.slug}`">{{ tool.title }} <small class="text-muted">von {{ tool.vendor }}</small></n-link>
             </li>
         </ul>
     </div>
@@ -24,7 +24,7 @@ export default {
     },
     head () {
         return {
-            title: 'Tools, Apps und Scripte für Streamer und Inhaltserzeuger'
+            title: 'Tools, Apps und Scripte für Streamer und Inhaltserzeuger auf dialogikTV'
         }
     }
 }

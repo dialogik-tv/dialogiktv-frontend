@@ -7,21 +7,9 @@
                 <h1 class="title">
                     dialogikTV
                 </h1>
-                <h2 class="subtitle">
-                    The dialogikTV frontend Nuxt.js application
+                <h2 class="subtitle mx-5 px-5">
+                    Tools, Tutorials und News für Streamer und Inhaltserzeuger
                 </h2>
-                <div class="links">
-                    <a href="https://nuxtjs.org/" target="_blank" class="button--green">
-                        Documentation
-                    </a>
-                    <a
-                        href="https://github.com/nuxt/nuxt.js"
-                        target="_blank"
-                        class="button--grey"
-                    >
-                        GitHub
-                    </a>
-                </div>
             </div>
         </div>
         <div class="container-fluid jumbotron">
