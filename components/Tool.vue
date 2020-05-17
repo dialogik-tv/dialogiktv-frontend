@@ -57,9 +57,7 @@ export default {
     },
     async fetch() {
         const slug = this.$route.params.slug;
-        console.log(slug);
         const { data } = await this.$axios.get(`https://dialogiktv-api.herokuapp.com/api/tool/${slug}`);
-        console.log(data);
         this.tool = data;
     },
     head () {
