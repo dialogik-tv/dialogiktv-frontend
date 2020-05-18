@@ -53,6 +53,7 @@ module.exports = {
      ** dotenv
      */
     env: {
+        TZ: process.env.TZ,
         API_BASE: process.env.API_BASE
     },
     /*

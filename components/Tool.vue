@@ -56,8 +56,6 @@ export default {
         };
     },
     async fetch() {
-        console.log('comp-i-HOST', process.env.HOST);
-        console.log('comp-i-API_BASE', process.env.API_BASE);
         const slug = this.$route.params.slug;
         const url = `${process.env.API_BASE}/api/tool/${slug}`;
         const { data } = await this.$axios.get(url);

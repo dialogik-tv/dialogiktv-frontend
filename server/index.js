@@ -11,11 +11,6 @@ app.use(secure)
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
 
-console.log('srv-TZ', process.env.TZ);
-console.log('srv-HOST', process.env.HOST);
-console.log('srv-NODE_ENV', process.env.NODE_ENV);
-console.log('srv-API_BASE', process.env.API_BASE);
-
 async function start() {
     // Init Nuxt.js
     const nuxt = new Nuxt(config)
