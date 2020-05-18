@@ -23,6 +23,8 @@ export default {
         };
     },
     async fetch() {
+        console.log('comp-HOST', process.env.HOST);
+        console.log('comp-API_BASE', process.env.API_BASE);
         const url = process.env.API_BASE + '/api/tools';
         const { data } = await this.$axios.get(url);
         this.tools = data;

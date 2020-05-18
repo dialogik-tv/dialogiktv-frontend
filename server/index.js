@@ -1,4 +1,3 @@
-require("dotenv").config();
 const express = require('express')
 const secure = require('express-force-https')
 const consola = require('consola')
@@ -11,6 +10,11 @@ app.use(secure)
 // Import and Set Nuxt.js options
 const config = require('../nuxt.config.js')
 config.dev = process.env.NODE_ENV !== 'production'
+
+console.log('srv-TZ', process.env.TZ);
+console.log('srv-HOST', process.env.HOST);
+console.log('srv-NODE_ENV', process.env.NODE_ENV);
+console.log('srv-API_BASE', process.env.API_BASE);
 
 async function start() {
     // Init Nuxt.js
