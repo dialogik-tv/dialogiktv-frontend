@@ -23,6 +23,9 @@ export default {
         };
     },
     async fetch() {
+        console.log('TZ', process.env.TV);
+        console.log('HOST', process.env.HOST);
+        console.log('NODE_ENV', process.env.NODE_ENV);
         console.log('API_BASE', process.env.API_BASE);
         const url = process.env.API_BASE + '/api/tools';
         const { data } = await this.$axios.get(url);
