@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require('express')
 const secure = require('express-force-https')
 const consola = require('consola')
