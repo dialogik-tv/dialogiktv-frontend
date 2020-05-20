@@ -3,13 +3,17 @@
         <div class="my-3">
             <n-link :to="'/app/tools'">← zurück zu den Tools</n-link>
         </div>
-        <p v-if="$fetchState.pending">Fetching posts...</p>
-        <p v-else-if="$fetchState.error">Error while fetching tools: {{ $fetchState.error.message }}</p>
+
+        <p v-if="$fetchState.pending" class="text-muted">Fetching tool...</p>
+        <div v-else-if="$fetchState.error" class="alert alert-danger" role="alert">
+            <h2>Error</h2>
+            <p class="mb-0">Error fetching tool <code>{{ $fetchState.error.message }}</code></p>
+        </div>
         <div v-else>
             <div class="card p-5">
-                <h1 class="mb-0">{{ tool.title }}</h1>
                 <div class="row">
-                    <div class="col">
+                    <div class="col-lg pr-5">
+                        <h1 class="mb-0">{{ tool.title }}</h1>
                         <div class="text-muted">
                             <small>
                                 erstellt von <span class="text-dark">{{ tool.User.username }}</span>
@@ -23,12 +27,13 @@
 
                         <p class="lead">{{ tool.description }}</p>
                     </div>
-                    <div class="col-3 text-muted">
-                        <div>
-                            <small>Anbieter</small>
+                    <div class="col-lg-3 text-muted">
+                        <div v-if="tool.vendor" class="mb-4">
+                            <div class="text-muted border-bottom mb-2"><small>Anbieter</small></div>
                             <div><a class="btn btn-sm btn-outline-secondary" target="_blank" v-bind:href="tool.vendorLink">{{ tool.vendor }} ↗</a></div>
                         </div>
-                        <div class="border-top mt-3 pt-3">
+                        <div>
+                            <div class="text-muted border-bottom mb-2"><small>zum Download</small></div>
                             <a class="btn btn-danger" target="_blank" v-bind:href="tool.link">zum Download ↗</a>
                         </div>
                     </div>

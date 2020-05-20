@@ -2,16 +2,33 @@
     <div class="mt-5 pt-3">
         <h1>Tools</h1>
         <p class="lead mb-5">Hier findet ihr eine umfangreiche Sammlung von Tools, Apps und Scripten, die dir das Streamen und das Inhalteerzeugen erleichtern oder ein bisschen verschönern.</p>
-        <p class="text-muted display-4" v-if="$fetchState.pending">Fetching posts...</p>
+
+        <div class="mb-2 d-flex content-justify-between">
+            <button v-on:click="$fetch" class="btn btn-sm btn-light">Refresh</button>
+            <input type="text" v-model="filter.term" class="form-control form-control-sm" />
+            <!-- <select class="form-control form-control-sm">
+                <optgroup label="Test">
+                    <option value="">Test</option>
+                    <option value="">Test2</option>
+                    <option value="">Test3</option>
+                    <option value="">Test4</option>
+                    <option value="">Test5</option>
+                </optgroup>
+            </select> -->
+        </div>
+
+        <p v-if="$fetchState.pending" class="text-muted">Fetching tools...</p>
         <div v-else-if="$fetchState.error" class="alert alert-danger" role="alert">
             <h2>Error</h2>
-            <p class="mb-0">Error fetching tools: {{ $fetchState.error.message }}</p>
+            <p class="mb-0">Error fetching tools <code>{{ $fetchState.error.message }}</code></p>
         </div>
-        <ul v-else class="list-group">
-            <li class="list-group-item" v-for="tool of tools" :key="tool.slug">
-                <n-link :to="`/app/tool/${tool.slug}`">{{ tool.title }} <small class="text-muted">von {{ tool.vendor }}</small></n-link>
-            </li>
-        </ul>
+        <div v-else>
+            <ul class="list-group">
+                <li class="list-group-item py-3" v-for="tool in filteredTools" :key="tool.slug">
+                    <n-link :to="`/app/tool/${tool.slug}`">{{ tool.title }} <small v-if="tool.vendor" class="text-muted">von {{ tool.vendor }}</small></n-link>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
@@ -19,8 +36,28 @@
 export default {
     data() {
         return {
-            tools: []
+            tools: [],
+            filter: {
+                term: ''
+            }
         };
+    },
+    computed: {
+        filteredTools() {
+            return this.tools.filter(tool => {
+                console.log(tool, this.filter.term)
+                if(this.filter.term == null) {
+                    return;
+                }
+                let inTitle  = tool.title.toLowerCase().indexOf(this.filter.term.toLowerCase()) > -1;
+                let inVendor = false;
+                if(tool.vendor != null) {
+                    inVendor = tool.vendor.toLowerCase().indexOf(this.filter.term.toLowerCase()) > -1;
+                }
+
+                return inTitle || inVendor;
+            })
+        }
     },
     async fetch() {
         const url = process.env.API_BASE + '/api/tools';
