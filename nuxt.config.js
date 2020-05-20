@@ -33,7 +33,8 @@ module.exports = {
      */
     buildModules: [
         // Doc: https://github.com/nuxt-community/eslint-module
-        '@nuxtjs/eslint-module'
+        '@nuxtjs/eslint-module',
+        '@nuxtjs/moment'
     ],
     /*
      ** Nuxt.js modules
@@ -60,5 +61,17 @@ module.exports = {
          ** You can extend webpack config here
          */
         extend(config, ctx) {}
+    },
+    /*
+     ** Moment.js configuration
+     */
+    moment: {
+        locales: ['de'],
+        defaultLocale: 'de',
+        timezone: {
+            startYear: 2015,
+            endYear: 2030
+        },
+        defaultTimezone: 'Europe/Berlin'
     }
 }

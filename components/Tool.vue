@@ -13,7 +13,7 @@
                         <div class="text-muted">
                             <small>
                                 erstellt von <span class="text-dark">{{ tool.User.username }}</span>
-                                am <span class="text-dark">{{ tool.createdAt }}</span>
+                                {{ $moment(tool.createdAt).fromNow() }}
                             </small>
                         </div>
                         <div class="mb-3">
