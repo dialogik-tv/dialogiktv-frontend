@@ -80,8 +80,8 @@ module.exports = {
      */
     fontawesome: {
         icons: {
-            // solid: [],
-            regular: ['faSearch', 'faRefresh'],
+            solid: ['faSearch', 'faSyncAlt'],
+            // regular: [],
             // brands: []
         }
     }
