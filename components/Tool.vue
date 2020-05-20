@@ -4,7 +4,7 @@
             <n-link :to="'/app/tools'">← zurück zu den Tools</n-link>
         </div>
 
-        <p v-if="$fetchState.pending" class="text-muted">Fetching tool...</p>
+        <p v-if="$fetchState.pending" class="text-muted text-center py-4 h3">Fetching tool...</p>
         <div v-else-if="$fetchState.error" class="alert alert-danger" role="alert">
             <h2>Error</h2>
             <p class="mb-0">Error fetching tool <code>{{ $fetchState.error.message }}</code></p>

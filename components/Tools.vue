@@ -3,9 +3,13 @@
         <h1>Tools</h1>
         <p class="lead mb-5">Hier findet ihr eine umfangreiche Sammlung von Tools, Apps und Scripten, die dir das Streamen und das Inhalteerzeugen erleichtern oder ein bisschen verschönern.</p>
 
-        <div class="mb-2 d-flex content-justify-between">
-            <button v-on:click="$fetch" class="btn btn-sm btn-light">Refresh</button>
-            <input type="text" v-model="filter.term" class="form-control form-control-sm" />
+        <div class="mb-2 d-flex justify-content-between">
+            <div class="w-50">
+                <input type="text" v-model="filter.term" class="form-control form-control-sm d-inline w-auto" placeholder="Suche" />
+                <font-awesome-icon icon="search" class="filtersubmit text-muted d-none d-lg-inline" />
+            </div>
+            <button v-on:click="$fetch" class="btn btn-sm btn-light"><font-awesome-icon icon="sync-alt" class="text-primary" /></button>
+
             <!-- <select class="form-control form-control-sm">
                 <optgroup label="Test">
                     <option value="">Test</option>
@@ -17,9 +21,7 @@
             </select> -->
         </div>
 
-        <font-awesome-icon icon="refresh" />
-        
-        <p v-if="$fetchState.pending" class="text-muted">Fetching tools...</p>
+        <p v-if="$fetchState.pending" class="text-muted text-center py-4 h3">Fetching tools...</p>
         <div v-else-if="$fetchState.error" class="alert alert-danger" role="alert">
             <h2>Error</h2>
             <p class="mb-0">Error fetching tools <code>{{ $fetchState.error.message }}</code></p>
@@ -74,6 +76,14 @@ export default {
 </script>
 
 <style scoped>
+.filtersubmit {
+    position: relative;
+    z-index: 1;
+    left: -30px;
+    top: 1px;
+    cursor: pointer;
+}
+
 .fetching {
     animation: 0.5s appear;
     margin: auto;
