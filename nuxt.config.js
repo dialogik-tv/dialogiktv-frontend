@@ -49,7 +49,9 @@ module.exports = {
         '@nuxtjs/axios',
         '@nuxtjs/pwa',
         // Doc: https://github.com/nuxt-community/dotenv-module
-        '@nuxtjs/dotenv'
+        '@nuxtjs/dotenv',
+        // Doc: https://auth.nuxtjs.org
+        '@nuxtjs/auth'
     ],
     /*
      ** dotenv
@@ -57,6 +59,12 @@ module.exports = {
     env: {
         TZ: process.env.TZ,
         API_BASE: process.env.API_BASE
+    },
+    /*
+     ** Authentication configuration
+     */
+    auth: {
+
     },
     /*
      ** Axios module configuration
