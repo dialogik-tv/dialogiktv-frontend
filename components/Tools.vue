@@ -17,6 +17,8 @@
             </select> -->
         </div>
 
+        <font-awesome-icon icon="refresh" />
+        
         <p v-if="$fetchState.pending" class="text-muted">Fetching tools...</p>
         <div v-else-if="$fetchState.error" class="alert alert-danger" role="alert">
             <h2>Error</h2>
@@ -45,7 +47,6 @@ export default {
     computed: {
         filteredTools() {
             return this.tools.filter(tool => {
-                console.log(tool, this.filter.term)
                 if(this.filter.term == null) {
                     return;
                 }

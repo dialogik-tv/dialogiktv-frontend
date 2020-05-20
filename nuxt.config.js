@@ -34,7 +34,8 @@ module.exports = {
     buildModules: [
         // Doc: https://github.com/nuxt-community/eslint-module
         '@nuxtjs/eslint-module',
-        '@nuxtjs/moment'
+        '@nuxtjs/moment',
+        '@nuxtjs/fontawesome'
     ],
     /*
      ** Nuxt.js modules
@@ -73,5 +74,15 @@ module.exports = {
             endYear: 2030
         },
         defaultTimezone: 'Europe/Berlin'
+    },
+    /*
+     ** Fontawesome configuration
+     */
+    fontawesome: {
+        icons: {
+            // solid: [],
+            regular: ['faSearch', 'faRefresh'],
+            // brands: []
+        }
     }
 }
