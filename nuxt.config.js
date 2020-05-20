@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 module.exports = {
     mode: 'spa',
     /*
@@ -49,6 +51,13 @@ module.exports = {
         // Doc: https://github.com/nuxt-community/dotenv-module
         '@nuxtjs/dotenv'
     ],
+    /*
+     ** dotenv
+     */
+    env: {
+        TZ: process.env.TZ,
+        API_BASE: process.env.API_BASE
+    },
     /*
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options

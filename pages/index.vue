@@ -1,7 +1,7 @@
 <template>
     <div>
         <navbar />
-        <div class="container">
+        <div id="landing" class="container">
             <div>
                 <logo />
                 <h1 class="title">
@@ -38,6 +38,11 @@ export default {
     justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+#landing {
+    /* Subtract navbar from first container */
+    min-height: calc(100vh - 56px);
 }
 
 .title {
