@@ -12,8 +12,8 @@
         data() {
             return {
                 userInfo: {
-                    email: 'moritz@dialogik.tv',
-                    password: 'test-123!'
+                    email: '',
+                    password: ''
                 }
             }
         },
