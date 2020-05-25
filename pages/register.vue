@@ -2,7 +2,7 @@
     <div>
         <h1>Register</h1>
 
-        <UserAuthForm buttonText="Register" v-bind:submitForm="registerUser" hasName="true" />
+        <UserAuthForm buttonText="Register" v-bind:submitForm="registerUser" isRegistration="true" />
     </div>
 </template>
 

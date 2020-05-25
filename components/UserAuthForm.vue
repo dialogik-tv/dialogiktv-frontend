@@ -1,8 +1,10 @@
 <template>
     <div>
-        <input type="text" v-model="userInfo.username" v-if="hasName" />
-        <input type="email" v-model="userInfo.email" />
-        <input type="password" v-model="userInfo.password" />
+        <input type="text" v-model="userInfo.username" v-if="isRegistration" placeholder="Username" />
+        <input type="text" v-model="userInfo.firstname" v-if="isRegistration" placeholder="Vorname" />
+        <input type="text" v-model="userInfo.lastname" v-if="isRegistration" placeholder="Nachname" />
+        <input type="email" v-model="userInfo.email" placeholder="E-Mail" />
+        <input type="password" v-model="userInfo.password" placeholder="Passwort" />
         <button v-on:click="submitForm(userInfo)">{{ buttonText }}</button>
     </div>
 </template>
@@ -13,12 +15,14 @@
             return {
                 userInfo: {
                     username: '',
+                    firstname: '',
+                    lastname: '',
                     email: '',
                     password: ''
                 }
             }
         },
-        props: ["submitForm", "buttonText", "hasName"]
+        props: ["submitForm", "buttonText", "isRegistration"]
     }
 </script>
 
