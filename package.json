@@ -1,8 +1,8 @@
 {
     "name": "dialogiktv-frontend",
     "version": "0.0.1",
-    "description": "The dialogikTV frontend Nuxt.js application",
-    "author": "Moritz",
+    "description": "The dialogikTV web frontend application",
+    "author": "Moritz <moritz@dialogik.tv>",
     "private": true,
     "scripts": {
         "dev": "cross-env NODE_ENV=development nodemon server/index.js --watch server",
