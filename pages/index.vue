@@ -1,6 +1,5 @@
 <template>
     <div>
-        <navbar />
         <div id="landing" class="container">
             <div>
                 <logo />
@@ -19,12 +18,10 @@
 </template>
 
 <script>
-import Navbar from '~/components/Navbar.vue';
 import Logo from '~/components/Logo.vue';
 
 export default {
     components: {
-        Navbar,
         Logo
     }
 }

@@ -1,5 +1,43 @@
 <template>
     <div>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <n-link :to="'/'" class="navbar-brand">dialogikTV</n-link>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <n-link :to="'/app/tools'" class="nav-link">Tools</n-link>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="/app/tutorials">Tutorials</a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="/app/news">News</a>
+                    </li> -->
+                    <!-- <li class="nav-item">
+                        <a class="nav-link" href="/app/users">Users</a>
+                    </li> -->
+                </ul>
+                <div>
+                    <div v-if="$auth.loggedIn">
+                        {{ $auth.user.username }}
+                        <v-btn text class="btn btn-danger">Logout</v-btn>
+                    </div>
+                    <div v-else>
+                        <v-btn text to="/login" class="btn btn-sm btn-outline-light">Login</v-btn>
+                        <v-btn text to="/register" class="btn btn-sm btn-light">Register</v-btn>
+                    </div>
+                    <UserAuthForm buttonText="Login" v-bind:submitForm="loginUser" />
+                </div>
+                <!-- <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form> -->
+            </div>
+        </nav>
         <nuxt />
     </div>
 </template>

@@ -1,25 +1,13 @@
 <template>
-    <v-form v-model="valid">
-        <v-text-field v-model="userInfo.name"
-                                    label="Name"
-                                    :rules="[required('name')]"
-                                    v-if="hasName" />
+    <form>
+        <input type="text" v-model="userInfo.username" v-if="hasName" />
 
-        <v-text-field v-model="userInfo.email"
-                                    label="Email"
-                                    :rules="[required('email'), emailFormat()]"/>
+        <input type="email" v-model="userInfo.email" />
 
-        <v-text-field v-model="userInfo.password"
-                                    label="Password"
-                                    :type="showPassword ? 'text' : 'password'"
-                                    :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                    @click:append="showPassword = !showPassword"
-                                    counter=true
-                                    :rules="[required('password'), minLength('password', 8)]"
-                                    />
+        <input type="password" v-model="userInfo.password" />
 
-        <v-btn @click="submitForm(userInfo)" :disabled="!valid">{{ buttonText }}</v-btn>
-    </v-form>
+        <button v-on:click="submitForm(userInfo)">{{ buttonText }}</button>
+    </form>
 </template>
 
 <script>
