@@ -58,19 +58,29 @@ module.exports = {
      */
     env: {
         TZ: process.env.TZ,
-        API_BASE: process.env.API_BASE
-    },
-    /*
-     ** Authentication configuration
-     */
-    auth: {
-
+        API_URL: process.env.API_URL
     },
     /*
      ** Axios module configuration
      ** See https://axios.nuxtjs.org/options
      */
-    axios: {},
+    axios: {
+        https: true
+    },
+    /*
+     ** Authentication configuration
+     */
+    auth: {
+        strategies: {
+            local: {
+                endpoints: {
+                    login: { url: '/login', method: 'post', propertyName: 'token' },
+                    logout: false,
+                    user: { url: '/user/me', method: 'get', propertyName: false }
+                }
+            }
+        }
+    },
     /*
      ** Build configuration
      */

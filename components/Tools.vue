@@ -63,7 +63,7 @@ export default {
         }
     },
     async fetch() {
-        const url = `${process.env.API_BASE}/api/tools`;
+        const url = `${process.env.API_URL}/tools`;
         const { data } = await this.$axios.get(url);
         this.tools = data;
     },

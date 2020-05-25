@@ -14,8 +14,12 @@ export default {
         UserAuthForm
     },
     methods: {
-        loginUser(logininfo) {
-            alert('Log in!');
+        async loginUser(loginInfo) {
+            await this.$auth.loginWith('local', {
+                data: loginInfo
+            });
+            console.log(this.$auth.loggedIn);
+            this.$router.push('/');
         }
     }
 }

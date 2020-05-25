@@ -24,13 +24,12 @@
                 <div>
                     <div v-if="$auth.loggedIn">
                         {{ $auth.user.username }}
-                        <v-btn text class="btn btn-danger">Logout</v-btn>
+                        <button v-on:click="$auth.logout()" class="btn btn-danger">Logout</button>
                     </div>
                     <div v-else>
-                        <v-btn text to="/login" class="btn btn-sm btn-outline-light">Login</v-btn>
-                        <v-btn text to="/register" class="btn btn-sm btn-light">Register</v-btn>
+                        <n-link :to="'/login'" class="btn btn-sm btn-outline-light">Login</n-link>
+                        <n-link :to="'/register'" class="btn btn-sm btn-light">Register</n-link>
                     </div>
-                    <UserAuthForm buttonText="Login" v-bind:submitForm="loginUser" />
                 </div>
                 <!-- <form class="form-inline my-2 my-lg-0">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

@@ -2,7 +2,7 @@
     <div>
         <h1>Register</h1>
 
-        <UserAuthForm buttonText="Login" v-bind:submitForm="loginUser" hasName="true" />
+        <UserAuthForm buttonText="Register" v-bind:submitForm="registerUser" hasName="true" />
     </div>
 </template>
 
@@ -14,8 +14,12 @@ export default {
         UserAuthForm
     },
     methods: {
-        loginUser(registrationinfo) {
-            alert('Log in!');
+        async registerUser(registrationInfo) {
+            let url = `${process.env.API_URL}/register`;
+            await this.$axios.post(url, registrationInfo);
+            this.$auth.loginWith('local', {
+                data: registrationInfo
+            });
         }
     }
 }

@@ -1,29 +1,20 @@
 <template>
-    <form>
+    <div>
         <input type="text" v-model="userInfo.username" v-if="hasName" />
-
         <input type="email" v-model="userInfo.email" />
-
         <input type="password" v-model="userInfo.password" />
-
         <button v-on:click="submitForm(userInfo)">{{ buttonText }}</button>
-    </form>
+    </div>
 </template>
 
 <script>
-    import validations from "@/utils/validations";
-
     export default {
         data() {
             return {
-                valid: false,
-                showPassword: false,
-                hasName: false,
                 userInfo: {
-                    email: '',
-                    password: ''
-                },
-                ...validations
+                    email: 'moritz@dialogik.tv',
+                    password: 'test-123!'
+                }
             }
         },
         props: ["submitForm", "buttonText", "hasName"]
