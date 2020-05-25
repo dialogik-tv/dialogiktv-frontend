@@ -12,6 +12,7 @@
         data() {
             return {
                 userInfo: {
+                    username: '',
                     email: '',
                     password: ''
                 }
