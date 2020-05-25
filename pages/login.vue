@@ -18,7 +18,6 @@ export default {
             await this.$auth.loginWith('local', {
                 data: loginInfo
             });
-            console.log(this.$auth.loggedIn);
             this.$router.push('/');
         }
     }

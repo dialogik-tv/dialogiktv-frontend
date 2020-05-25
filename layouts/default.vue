@@ -22,9 +22,9 @@
                     </li> -->
                 </ul>
                 <div>
-                    <div v-if="$auth.loggedIn">
-                        {{ $auth.user.username }}
-                        <button v-on:click="$auth.logout()" class="btn btn-danger">Logout</button>
+                    <div v-if="$auth.loggedIn" class="mr-2">
+                        <small class="text-light">{{ $auth.user.username }}</small>
+                        <!-- <button v-on:click="$auth.logout()" class="btn btn-danger">Logout</button> -->
                     </div>
                     <div v-else>
                         <n-link :to="'/login'" class="btn btn-sm btn-outline-light">Login</n-link>
