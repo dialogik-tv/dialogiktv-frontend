@@ -31,14 +31,13 @@ module.exports = {
             { rel: 'icon', type: 'image/png', sizes: '192x192', href: '/android-icon-192x192.png' },
             { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/favicon-32x32.png' },
             { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon-96x96.png' },
-            { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' },
-            { rel: 'manifest', href: '/manifest.json' }
+            { rel: 'icon', type: 'image/png', sizes: '16x16', href: '/favicon-16x16.png' }
         ]
     },
     /*
      ** Customize the progress-bar color
      */
-    loading: { color: '#fff' },
+    loading: { color: '#00acee' },
     /*
      ** Global CSS
      */
@@ -70,6 +69,19 @@ module.exports = {
         // Doc: https://auth.nuxtjs.org
         '@nuxtjs/auth'
     ],
+    module: {
+        rules: [
+            {
+               test: /\.s[ac]ss$/i,
+               use: ['style-loader','css-loader','sass-loader',],
+             },
+        ],
+    },
+    bootstrapVue: {
+        bootstrapCSS: false,
+        bootstrapVueCSS: false
+    },
+    css: ['@/assets/scss/custom.scss'],
     /*
      ** dotenv
      */
