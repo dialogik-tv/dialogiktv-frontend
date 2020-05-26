@@ -1,7 +1,12 @@
 <template>
     <div class="mt-5 pt-3">
         <h1>Tools</h1>
-        <p class="lead mb-5">Hier findet ihr eine umfangreiche Sammlung von Tools, Apps und Scripten, die dir das Streamen und das Inhalteerzeugen erleichtern oder ein bisschen verschönern.</p>
+
+        <div class="row mb-5">
+            <div class="col-md-8">
+                <p class="lead">Hier findet ihr eine umfangreiche Sammlung von Tools, Apps und Scripten, die euch das Streamen und Inhalteerzeugen vereinfachen und angenehmer machen.</p>
+            </div>
+        </div>
 
         <div class="mb-2 d-flex justify-content-between">
             <div class="w-50">

@@ -1,15 +1,17 @@
 <template>
     <div>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <n-link :to="'/'" class="navbar-brand">dialogikTV</n-link>
+        <nav class="navbar navbar-expand-sm navbar-light bg-light">
+            <n-link :to="'/'" class="navbar-brand">
+                <img class="logo" src="logo.svg" alt="dialogikTV Brand">
+            </n-link>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <n-link :to="'/app/tools'" class="nav-link">Tools</n-link>
+                    <li class="nav-item px-md-3">
+                        <n-link :to="'/app/tools'" class="nav-link text-primary">Tools</n-link>
                     </li>
                     <!-- <li class="nav-item">
                         <a class="nav-link" href="/app/tutorials">Tutorials</a>
@@ -23,7 +25,7 @@
                 </ul>
                 <div>
                     <div v-if="$auth.loggedIn" class="mr-2">
-                        <small class="text-light">{{ $auth.user.username }}</small>
+                        <small class="text-muted">{{ $auth.user.username }}</small>
                         <!-- <button v-on:click="$auth.logout()" class="btn btn-danger">Logout</button> -->
                     </div>
                     <div v-else>
@@ -41,6 +43,17 @@
     </div>
 </template>
 
-<style>
-/* ... */
+<style scoped>
+.logo {
+    width: 100px;
+}
+
+.nav-item {
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.nav-item::first-letter {
+    font-size: 1.3em;
+}
 </style>
