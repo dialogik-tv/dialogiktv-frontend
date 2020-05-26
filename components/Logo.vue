@@ -6,7 +6,7 @@
 
 <style scoped>
 .logo {
-    animation: 3s appear;
+    animation: 1.5s appear;
     margin: auto;
     max-width: 640px;
 }
