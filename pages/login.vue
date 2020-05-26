@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <div class="container">
         <h1>Login</h1>
-        UH!
+
         <UserAuthForm buttonText="Login" v-bind:submitForm="loginUser" />
     </div>
 </template>

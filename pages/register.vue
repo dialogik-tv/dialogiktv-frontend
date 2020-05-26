@@ -1,8 +1,8 @@
 <template>
-    <div>
-        <h1>Register</h1>
+    <div class="container">
+        <h1 class="mb-5">Neuen Account anlegen</h1>
 
-        <UserAuthForm buttonText="Register" v-bind:submitForm="registerUser" isRegistration="true" />
+        <UserAuthForm buttonText="Registrieren" v-bind:submitForm="registerUser" isRegistration="true" />
     </div>
 </template>
 

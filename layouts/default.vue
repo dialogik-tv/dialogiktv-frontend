@@ -29,8 +29,8 @@
                         <!-- <button v-on:click="$auth.logout()" class="btn btn-danger">Logout</button> -->
                     </div>
                     <div v-else>
-                        <n-link :to="'/login'" class="btn btn-sm btn-outline-light">Login</n-link>
-                        <n-link :to="'/register'" class="btn btn-sm btn-light">Register</n-link>
+                        <n-link :to="'/login'" class="btn btn-sm btn-outline-light text-dark">Login</n-link>
+                        <n-link :to="'/register'" class="btn btn-sm btn-primary">Register</n-link>
                     </div>
                 </div>
                 <!-- <form class="form-inline my-2 my-lg-0">
