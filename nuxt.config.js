@@ -6,6 +6,9 @@ module.exports = {
      ** Headers of the page
      */
     head: {
+        htmlAttrs: {
+            lang: 'de',
+        },
         title: process.env.npm_package_name || '',
         meta: [
             { charset: 'utf-8' },
