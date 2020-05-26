@@ -16,7 +16,10 @@ export default {
     methods: {
         async loginUser(loginInfo) {
             await this.$auth.loginWith('local', {
-                data: loginInfo
+                data: {
+                    email: loginInfo.email,
+                    password: loginInfo.password
+                }
             });
             this.$router.push('/');
         }
