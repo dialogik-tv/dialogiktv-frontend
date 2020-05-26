@@ -1,6 +1,6 @@
 <template>
     <div class="logo-holder text-center">
-        <img class="logo" src="logo.svg" alt="dialogikTV Logo">
+        <img class="logo" src="/logo.svg" alt="dialogikTV Logo">
     </div>
 </template>
 

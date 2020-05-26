@@ -2,7 +2,7 @@
     <div>
         <div id="landing" class="container">
             <div>
-                <logo />
+                <Logo />
                 <h2 class="text-muted font-weight-light mt-5 mx-5 px-5">
                     Tools, Tutorials und News für Streamer und Inhaltserzeuger
                 </h2>
