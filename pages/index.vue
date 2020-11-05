@@ -25,7 +25,7 @@
                         <div class="embed-responsive embed-responsive-16by9">
                             <iframe
                                 class="embed-responsive-item"
-                                src="https://player.twitch.tv/?video=791753769&parent=localhost&autoplay=false"
+                                src="https://player.twitch.tv/?video=791753769&parent=dialogik.tv&autoplay=false"
                                 frameborder="0"
                                 scrolling="no"
                                 height="720"
