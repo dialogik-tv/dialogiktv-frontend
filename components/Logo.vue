@@ -6,17 +6,6 @@
 
 <style scoped>
 .logo {
-    animation: 1.5s appear;
-    margin: auto;
     max-width: 640px;
-}
-
-@keyframes appear {
-    0% {
-        opacity: 0;
-    }
-    100% {
-        opacity: 1;
-    }
 }
 </style>

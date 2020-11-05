@@ -159,7 +159,7 @@ module.exports = {
             //     'faAdjust'
             // ],
             brands: [
-                'faTwitch', 'faYoutube', 'faDiscord', 'faTwitter'
+                'faTwitch', 'faYoutube', 'faDiscord', 'faTwitter', 'faGithub'
             ]
         }
     },
