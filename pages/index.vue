@@ -74,7 +74,7 @@
                         <span class="text-nowrap"><a target="_blank" href="https://discord.com/invite/EB6BQPf"><font-awesome-icon :icon="['fab', 'discord']" /> Discord</a></span>
                         an uns richten.
                     </p>
-                    <p class="teaser-text-small mb-0">Als Developer kannst du einen Blick in unseren <a target="_blank" href="https://www.github.com/dialogik-tv">Quellcode auf <span class="text-nowrap"><font-awesome-icon :icon="['fab', 'discord']" /> github</span></a> werfen, Bugs finden, Issues melden, Pull Requests einreichen oder einfach nur im Code stöbern.</p>
+                    <p class="teaser-text-small mb-0">Als Developer kannst du einen Blick in unseren <a target="_blank" href="https://www.github.com/dialogik-tv">Quellcode auf <span class="text-nowrap"><font-awesome-icon :icon="['fab', 'github']" /> github</span></a> werfen, Bugs finden, Issues melden, Pull Requests einreichen oder einfach nur im Code stöbern.</p>
                 </b-col>
             </b-container>
         </b-container>
