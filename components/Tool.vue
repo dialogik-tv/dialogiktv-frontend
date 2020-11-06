@@ -232,15 +232,15 @@ export default {
         return {
             title: `${this.tool.title} auf dialogikTV`,
             meta: [
-                { hid: 'og:title', name: 'og:title', content: `${this.tool.title} auf dialogikTV` },
-                { hid: 'og:description', name: 'og:description', content: this.tool.description },
+                { name: 'og:title', content: `${this.tool.title} auf dialogikTV` },
+                { name: 'og:description', content: this.tool.description },
                 // Twitter meta settings
-                { hid: 'twitter:card', name: 'twitter:card', content: 'summary' },
-                { hid: 'twitter:site', name: 'twitter:site', content: '@dialogikTV' },
-                { hid: 'twitter:domain', property: 'twitter:domain', content: 'dialogik.tv' },
-                { hid: 'twitter:url', property: 'twitter:url', content: `https://dialogik.tv/tool/${this.tool.slug}` },
-                { hid: 'twitter:title', name: 'twitter:title', content: `${this.tool.title} auf dialogikTV` },
-                { hid: 'twitter:description', name: 'twitter:description', content: this.tool.description },
+                { name: 'twitter:card', content: 'summary' },
+                { name: 'twitter:site', content: '@dialogikTV' },
+                { property: 'twitter:domain', content: 'dialogik.tv' },
+                { property: 'twitter:url', content: `https://dialogik.tv/tool/${this.tool.slug}` },
+                { name: 'twitter:title', content: `${this.tool.title} auf dialogikTV` },
+                { name: 'twitter:description', content: this.tool.description },
             ]
         }
     },
