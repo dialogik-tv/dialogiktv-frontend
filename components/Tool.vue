@@ -237,6 +237,8 @@ export default {
                 // Twitter meta settings
                 { hid: 'twitter:card', name: 'twitter:card', content: 'summary' },
                 { hid: 'twitter:site', name: 'twitter:site', content: '@dialogikTV' },
+                { hid: 'twitter:domain', property: 'twitter:domain', content: 'dialogik.tv' },
+                { hid: 'twitter:url', property: 'twitter:url', content: `https://dialogik.tv/tool/${this.tool.slug}` },
                 { hid: 'twitter:title', name: 'twitter:title', content: `${this.tool.title} auf dialogikTV` },
                 { hid: 'twitter:description', name: 'twitter:description', content: this.tool.description },
             ]

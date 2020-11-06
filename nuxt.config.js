@@ -23,11 +23,13 @@ module.exports = {
             { name: 'msapplication-TileColor', content: '#ffffff' },
             { name: 'msapplication-TileImage', content: '/ms-icon-144x144.png' },
             { name: 'theme-color', content: '#ffffff' },
-            { hid: 'og:title', name: 'og:title', content: 'dialogikTV' },
-            { hid: 'og:image', name: 'og:image', content: '/favicon-96x96.png' },
+            { hid: 'og:url', property: 'og:url', content: 'https://dialogik.tv' },
+            { hid: 'og:title', property: 'og:title', content: 'dialogikTV' },
+            { hid: 'og:image', property: 'og:image', content: '/favicon-96x96.png' },
+            { hid: 'og:type', property: 'og:type', content: 'website' },
             {
                 hid: 'og:description',
-                name: 'og:description',
+                property: 'og:description',
                 content: 'Tools und Tutorials für Streamer und Inhaltserzeuger'
             },
             { hid: 'twitter:card', name: 'twitter:card', content: 'summary' },
