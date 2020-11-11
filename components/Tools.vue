@@ -3,7 +3,14 @@
         <div class="row">
             <div class="col-lg-10 offset-lg-1">
 
-                <h1 class="display-1">Tools</h1>
+                <div class="d-flex justify-content-between">
+                    <h1 class="display-1">Tools</h1>
+                    <div>
+                        <n-link :to="'/tool/new'" class="card-link btn btn-light text-primary">
+                            <font-awesome-icon icon="plus-circle" class="text-primary mr-1" /> Tool hinzufügen
+                        </n-link>
+                    </div>
+                </div>
 
                 <!-- Description bar -->
                 <div class="row mb-2">
@@ -12,54 +19,14 @@
                     </div>
                 </div>
 
-                <!-- Teaser cols -->
-                <div v-if="$route.fullPath == '/tools'" class="mb-5">
-                    <b-card-group deck>
-                        <!-- <b-card bg-variant="dark" text-variant="white" title="Title" img-src="https://placekitten.com/g/300/450" img-alt="Image" img-top> -->
-                        <b-card bg-variant="dark" text-variant="white" title="Schlagwortsuche">
-                            <b-card-text>
-                                Jeder Nutzer kann Tags hinzufügen. Dadurch entsteht eine nutzerbasierte Systematisierung der Tools.
-                            </b-card-text>
-                            <template v-slot:footer>
-                                <!-- <small class="text-muted">Last updated 3 mins ago</small> -->
-                                <n-link :to="'/tools/tags'" class="card-link btn btn-primary">zur Schlagwortsuche</n-link>
-                            </template>
-                        </b-card>
-                        <b-card bg-variant="dark" text-variant="white" title="Wertschöpfungskette">
-                            <b-card-text>
-                                Du willst das ganze professionell angehen? Dann ist die Betrachtung entlang der Wertschöpfungskette der Inhaltserzeugung einen Blick wert.
-                            </b-card-text>
-                            <template v-slot:footer>
-                                <n-link :to="'/tools/value-chain'" class="card-link btn btn-primary">zur Wertschöpfungskette</n-link>
-                            </template>
-                        </b-card>
-                        <b-card v-if="!$auth.loggedIn" bg-variant="primary" text-variant="white" title="Mitmachen!">
-                            <b-card-text>
-                                Du kannst dieses Projekt aktiv unterstützen. Registriere dich und komm' in unseren Discord um dich mit anderen Mithelfern zu vernetzen.
-                            </b-card-text>
-                            <template v-slot:footer>
-                                <n-link :to="'/register'" class="card-link btn btn-light text-primary">Registrieren</n-link>
-                                <a href="http://discord.dialogik.tv" target="_blank" class="card-link btn btn-light text-primary">zum Discord</a>
-                            </template>
-                        </b-card>
-                        <b-card v-else bg-variant="primary" text-variant="white" title="Mitmachen!">
-                            <b-card-text>
-                                Du kannst dieses Projekt aktiv unterstützen. Erstelle Tools, Tutorials und Sammlungen und komm' in unseren Discord und vernetz' dich mit anderen Mithelfern.
-                            </b-card-text>
-                            <template v-slot:footer>
-                                <n-link :to="'/tool/new'" class="card-link btn btn-light text-primary">
-                                    <font-awesome-icon icon="plus-circle" class="text-primary mr-1" /> Tool hinzufügen
-                                </n-link>
-                                <a href="http://discord.dialogik.tv" target="_blank" class="card-link btn btn-light text-primary">zum Discord</a>
-                            </template>
-                        </b-card>
-                    </b-card-group>
-                </div>
-
                 <!-- Value Chain -->
-                <div v-if="$route.name == 'tools-value-chain-category'" class="mb-4 p-2 bg-dark rounded">
+                <div class="mb-4 p-2 bg-dark rounded">
                     <div class="p-md-3">
-                        <ValueChain :selected="$route.params.category" />
+                        <ValueChain
+                            :selected="filter.category"
+                            :filterString="encodeFilter"
+                            @pushCategoryToFilter="pushCategoryToFilter"
+                        />
                     </div>
                 </div>
 
@@ -67,11 +34,12 @@
                 <div class="mb-2 d-flex justify-content-between">
                     <div class="w-50">
                         <input type="text" v-model="filter.term" class="form-control form-control-sm d-inline w-auto" placeholder="Suche" />
-                        <font-awesome-icon icon="search" class="filtersubmit text-muted d-none d-lg-inline" />
-                        <div v-if="$route.params.tag" class="d-inline">
-                            <n-link :to="`/tools`" class="badge badge-light text-muted">
-                                {{ $route.params.tag }} <font-awesome-icon icon="times-circle" class="text-muted" />
-                            </n-link>
+                        <font-awesome-icon icon="times-circle" class="filter-term-cancel text-muted d-none d-lg-inline" @click="filter.term = ''" />
+                        <div class="d-inline">
+                            <span v-for="tag in filter.tag" :key="tag" class="badge badge-light text-muted tag-unselector mr-1" @click="removeTagFromFilter(tag)">
+                                {{ tag }}
+                                <font-awesome-icon icon="times-circle" class="text-muted" />
+                            </span>
                         </div>
                     </div>
                     <div>
@@ -119,8 +87,8 @@
                                         <small v-if="tool.vendor" class="text-muted">von {{ tool.vendor }}</small>
                                     </n-link>
                                     <div>
-                                        <span v-for="tag in tool.Tags">
-                                            <n-link :to="`/tools/tag/${tag.name}`" class="badge badge-secondary mr-1">{{ tag.name }}</n-link>
+                                        <span v-for="tag in tool.Tags" :key="tag.id">
+                                            <span class="badge badge-secondary mr-1 tag-selector" @click="addTagToFilter(tag.name)">{{ tag.name }}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -148,9 +116,12 @@ export default {
     },
     data() {
         return {
+            awaitingSearch: false,
             tools: [],
             filter: {
                 term: '',
+                category: [],
+                tag: [],
                 sortBy: 'createdAt',
                 revertedSort: true,
                 labels: {
@@ -179,15 +150,98 @@ export default {
         }
     },
     created() {
+        // Map query parameters to data
+        if('search' in this.$route.params) {
+            const input = this.decodeFilter;
+            if(input.term) {
+                this.filter.term = input.term;
+            }
+            if(input.category) {
+                this.filter.category = input.category;
+            }
+            if(input.tag) {
+                this.filter.tag = input.tag;
+            }
+            if(input.sortBy) {
+                this.filter.sortBy = input.sortBy;
+            }
+
+            if(input.revertedSort) {
+                this.filter.revertedSort = input.revertedSort;
+            }
+        }
+
+        // Set sort by correctly if this is the "value chain view"
         if(this.$route.name == 'tools-value-chain-category' && this.$route.fullPath != '/tools/value-chain') {
             this.filter.sortBy = 'categoryRelevance';
         }
-
-        if(typeof this.$route.params.search != 'undefined') {
-            console.log(this.$route.params.search);
-        }
+    },
+    methods: {
+        addTagToFilter(tag) {
+            const filter = this.filter.tag;
+            if(filter.indexOf(tag) < 0) {
+                filter.push(tag);
+            }
+        },
+        removeTagFromFilter(tag) {
+            const filter = this.filter.tag;
+            if(filter.indexOf(tag) > -1) {
+                filter.splice(filter.indexOf(tag), 1);
+            }
+        },
+        addCategoryToFilter(category) {
+            const filter = this.filter.category;
+            if(filter.indexOf(category) < 0) {
+                filter.push(category);
+            }
+        },
+        removeCategoryFromFilter(category) {
+            const filter = this.filter.category;
+            if(filter.indexOf(category) > -1) {
+                filter.splice(filter.indexOf(category), 1);
+            }
+        },
+        pushCategoryToFilter(category) {
+            this.addCategoryToFilter(category);
+        },
+    },
+    watch: {
+        'filter.tag': function(newTags, oldTags) {
+            this.$router.push(`/tools/${this.encodeFilter}`);
+        },
+        'filter.category': function(newCategory, oldCategory) {
+            this.$router.push(`/tools/${this.encodeFilter}`);
+        },
+        // Watch filter term and wait for user input
+        'filter.term': function(newTerm, oldTerm) {
+            if(!this.awaitingSearch) {
+                if(newTerm.length < 1) {
+                    this.$router.push(`/tools/${this.encodeFilter}`);
+                } else {
+                    setTimeout(() => {
+                        this.$router.push(`/tools/${this.encodeFilter}`);
+                        this.awaitingSearch = false;
+                    }, 1000);
+                }
+            }
+            this.awaitingSearch = true;
+        },
     },
     computed: {
+        // Encode filter to be ready for use in URL
+        encodeFilter: function() {
+            return JSON.stringify({
+                term: this.filter.term,
+                category: this.filter.category,
+                tag: this.filter.tag,
+                sortBy: this.filter.sortBy,
+                revertedSort: this.filter.revertedSort
+            })
+        },
+        // Decode filter from URL parameters
+        decodeFilter() {
+            return JSON.parse(this.$route.params.search);
+        },
         filteredTools() {
             return this.tools.filter(tool => {
                 // Check if term is in title
@@ -239,6 +293,13 @@ export default {
                     if(a[sortBy] > b[sortBy]) {
                         return up;
                     }
+                } else if(sortBy == 'title') {
+                    if(a[sortBy].toLowerCase() < b[sortBy].toLowerCase()) {
+                        return down;
+                    }
+                    if(a[sortBy].toLowerCase() > b[sortBy].toLowerCase()) {
+                        return up;
+                    }
                 } else {
                     if(a.ToolCategory.relevance < b.ToolCategory.relevance) {
                         return down;
@@ -259,37 +320,21 @@ export default {
             return icon;
         }
     },
-    methods: {
-    },
-    watch: {
-        // filter: (newFilter, oldFilter) => {
-        //     console.log('newFilter', newFilter);
-        //     console.log('oldFilter', oldFilter);
-        // }
-    },
     async fetch() {
-        const tag      = this.$route.params.tag;
-        const category = this.$route.params.category;
-        let url = `${process.env.API_URL}`;
+        try {
+            // Define API url prefix
+            let url = `${process.env.API_URL}/tools`;
 
-        // Tag search
-        if(typeof tag !== 'undefined') {
-            url = `${url}/tag/${tag}`;
-            const { data } = await this.$axios.get(url);
-            this.tools = data.Tools;
-        }
-
-        // Category search
-        else if(typeof category !== 'undefined') {
-            url = `${url}/category/${category}`;
-            const { data } = await this.$axios.get(url);
-            this.tools = data.Tools;
-
-        // Global search
-        } else {
-            url = `${url}/tools`;
+            // Fetch search parameters
+            if('search' in this.$route.params) {
+                if(this.filter.category.length > 0 || this.filter.tag.length > 0 || this.filter.term.length > 0) {
+                    url = `${url}/search/${this.encodeFilter}`;
+                }
+            }
             const { data } = await this.$axios.get(url);
             this.tools = data;
+        } catch (error) {
+            console.error('Error occured. Please try again.', error);
         }
     },
     head () {
@@ -301,7 +346,7 @@ export default {
 </script>
 
 <style scoped>
-.filtersubmit {
+.filter-term-cancel {
     position: relative;
     z-index: 1;
     left: -30px;
@@ -312,6 +357,10 @@ export default {
 .fetching {
     animation: 0.5s appear;
     margin: auto;
+}
+
+.tag-selector, .tag-unselector {
+    cursor: pointer;
 }
 
 @keyframes appear {

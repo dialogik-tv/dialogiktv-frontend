@@ -4,7 +4,7 @@
             <svg id="value-chain" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 544.31 143.97">
                 <g v-for="category in categories" @click="filterValueChain" :key="category.id" :id="category.id" :class="{ active: isActive(category.id) }">
                     <polygon :points="category.polygon.points" />
-                    <text v-for="text in category.texts" :x="text.x" :y="text.y">{{ text.content }}</text>
+                    <text v-for="text in category.texts" :key="text.content" :x="text.x" :y="text.y">{{ text.content }}</text>
                 </g>
             </svg>
         </div>
@@ -33,7 +33,7 @@ export default {
             categories: []
         }
     },
-    props: ['selected'],
+    props: ['selected', 'filterString'],
     created() {
         this.categories = ValueChainData.data().categories;
     },
@@ -68,11 +68,12 @@ export default {
     methods: {
         filterValueChain(e) {
             const category = e.target.parentElement.id;
-            this.$router.push(`/tools/value-chain/${category}`);
+            this.$emit('pushCategoryToFilter', category);
+            this.$router.push(`/tools/${this.filterString}`);
         },
         isActive(id) {
             let result = false;
-            if(id == this.selected) {
+            if(this.selected.indexOf(id) > -1) {
                 result = true;
             }
             return result;
