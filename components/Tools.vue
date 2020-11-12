@@ -328,7 +328,7 @@ export default {
             // Fetch search parameters
             if('search' in this.$route.params) {
                 if(this.filter.category.length > 0 || this.filter.tag.length > 0 || this.filter.term.length > 0) {
-                    url = `${url}/search/${this.encodeFilter}`;
+                    url = `${url}/${this.encodeFilter}`;
                 }
             }
             const { data } = await this.$axios.get(url);
