@@ -20,14 +20,29 @@
                 </div>
 
                 <!-- Value Chain -->
-                <div class="mb-4 p-2 bg-dark rounded">
-                    <div class="p-md-3">
-                        <ValueChain
-                            :selected="filter.category"
-                            :filterString="encodeFilter"
-                            @pushCategoryToFilter="pushCategoryToFilter"
-                        />
-                    </div>
+                <div class="accordion" role="tablist">
+                    <b-card no-body class="bg-dark mb-3">
+                        <b-card-header header-tag="header" class="p-1" role="tab">
+                            <b-button block v-b-toggle.accordion-content class="text-left" @click="'valueChainVisible = !valueChainVisible'">
+                                <span v-if="!valueChainVisible"><font-awesome-icon icon="caret-right" class="text-light mr-2" /></span>
+                                <span v-else><font-awesome-icon icon="caret-down" class="text-light mr-2" /></span>
+                                Wertschöpfungskette
+                            </b-button>
+                        </b-card-header>
+                        <b-collapse id="accordion-content" v-model="valueChainVisible" accordion="value-chain-accordion" role="tabpanel">
+                            <b-card-body>
+                                <b-card-text>
+                                    <div class="p-md-3">
+                                        <ValueChain
+                                            :selected="filter.category"
+                                            :filterString="encodeFilter"
+                                            @pushCategoryToFilter="pushCategoryToFilter"
+                                        />
+                                    </div>
+                                </b-card-text>
+                            </b-card-body>
+                        </b-collapse>
+                    </b-card>
                 </div>
 
                 <!-- Search and filter bar -->
@@ -48,7 +63,7 @@
                                 <b-dropdown-item @click="filter.sortBy='views'">Views</b-dropdown-item>
                                 <b-dropdown-item @click="filter.sortBy='title'">Name</b-dropdown-item>
                                 <b-dropdown-item @click="filter.sortBy='createdAt'">Alter</b-dropdown-item>
-                                <b-dropdown-item v-if="$route.name == 'tools-value-chain-category' && $route.fullPath != '/tools/value-chain'" @click="filter.sortBy='categoryRelevance'">Relevanz</b-dropdown-item>
+                                <b-dropdown-item v-if="filter.category.length > 0" @click="filter.sortBy='categoryRelevance'">Relevanz</b-dropdown-item>
                             </b-dropdown>
                         </div>
                         <div class="d-inline-block">
@@ -92,8 +107,15 @@
                                         </span>
                                     </div>
                                 </div>
-                                <div v-if="$route.name == 'tools-value-chain-category' && $route.fullPath != '/tools/value-chain'" class="col-md-2 text-right text-primary font-weight-bold">
-                                    {{ Math.round(tool.ToolCategory.relevance * 100) }} <span class="text-muted font-weight-normal">/ 100</span>
+                                <div v-if="filter.category.length > 0" class="col-md-4 text-md-right text-primary font-weight-bold">
+                                    <span v-if="filter.category.length > 1">
+                                        <div v-for="category in tool.Categories" :key="category.id">
+                                            <small class="text-muted">{{ category.name }}</small> {{ Math.round(tool.Categories[0].ToolCategory.relevance * 100) }} <span class="text-muted font-weight-normal">/ 100</span>
+                                        </div>
+                                    </span>
+                                    <span v-else>
+                                        {{ Math.round(tool.Categories[0].ToolCategory.relevance * 100) }} <span class="text-muted font-weight-normal">/ 100</span>
+                                    </span>
                                 </div>
                                 <div class="col-md-1 text-right">
                                     <span class="text-muted"><small>{{ tool.views }} <font-awesome-icon icon="eye" class="ml-1" /></small></span>
@@ -146,7 +168,8 @@ export default {
                         'desc': 'hoch🠚gering'
                     }
                 },
-            }
+            },
+            valueChainVisible: false,
         }
     },
     created() {
@@ -158,6 +181,9 @@ export default {
             }
             if(input.category) {
                 this.filter.category = input.category;
+                if(input.category.length > 0) {
+                    this.valueChainVisible = true;
+                }
             }
             if(input.tag) {
                 this.filter.tag = input.tag;
@@ -215,6 +241,12 @@ export default {
         'filter.category': function(newCategory, oldCategory) {
             this.$router.push(`/tools/${this.encodeFilter}`);
         },
+        'filter.sortBy': function(newSortBy, oldSortBy) {
+            this.$router.push(`/tools/${this.encodeFilter}`);
+        },
+        'filter.revertedSort': function(newRevertedSort, oldRevertedSort) {
+            this.$router.push(`/tools/${this.encodeFilter}`);
+        },
         // Watch filter term and wait for user input
         'filter.term': function(newTerm, oldTerm) {
             if(!this.awaitingSearch) {
@@ -245,29 +277,6 @@ export default {
         decodeFilter() {
             return JSON.parse(this.$route.params.search);
         },
-        filteredTools() {
-            return this.tools.filter(tool => {
-                // Check if term is in title
-                let inTitle = tool.title.toLowerCase().indexOf(this.filter.term.toLowerCase()) > -1;
-
-                // Check if term is in vendor name
-                let inVendor = false;
-                if(tool.vendor != null) {
-                    inVendor = tool.vendor.toLowerCase().indexOf(this.filter.term.toLowerCase()) > -1;
-                }
-
-                // Check if term is in tags
-                let inTags = false;
-                for (var i = 0; i < tool.Tags.length; i++) {
-                    if (tool.Tags[i].name.toLowerCase().indexOf(this.filter.term.toLowerCase()) > -1) {
-                        inTags = true;
-                        break;
-                    }
-                }
-
-                return inTitle || inVendor || inTags;
-            })
-        },
         sortedTools() {
             // Make values static so we can use them later in the sort function
             const reverted = this.filter.revertedSort;
@@ -288,7 +297,8 @@ export default {
             const direction = (reverted ? labels[sortBy].desc : labels[sortBy].asc);
 
             // Sort based on sortBy and revertedSort parameters
-            return this.filteredTools.sort(function compare(a, b) {
+            return this.tools.sort(function compare(a, b) {
+                // Regular sorting
                 if(sortBy != 'categoryRelevance') {
                     if(a[sortBy] < b[sortBy]) {
                         return down;
@@ -296,6 +306,7 @@ export default {
                     if(a[sortBy] > b[sortBy]) {
                         return up;
                     }
+                // by Title
                 } else if(sortBy == 'title') {
                     if(a[sortBy].toLowerCase() < b[sortBy].toLowerCase()) {
                         return down;
@@ -303,11 +314,13 @@ export default {
                     if(a[sortBy].toLowerCase() > b[sortBy].toLowerCase()) {
                         return up;
                     }
+                // by Category relevance
                 } else {
-                    if(a.ToolCategory.relevance < b.ToolCategory.relevance) {
+                    console.log(a, b);
+                    if(a.Categories[0].ToolCategory.relevance < b.Categories[0].ToolCategory.relevance) {
                         return down;
                     }
-                    if(a.ToolCategory.relevance > b.ToolCategory.relevance) {
+                    if(a.Categories[0].ToolCategory.relevance > b.Categories[0].ToolCategory.relevance) {
                         return up;
                     }
                 }
@@ -336,6 +349,7 @@ export default {
             }
             const { data } = await this.$axios.get(url);
             this.tools = data;
+            console.log(this.tools)
         } catch (error) {
             console.error('Error occured. Please try again.', error);
         }
