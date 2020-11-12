@@ -204,6 +204,9 @@ export default {
         pushCategoryToFilter(category) {
             this.addCategoryToFilter(category);
         },
+        unpushCategoryToFilter(category) {
+            this.removeCategoryFromFilter(category);
+        },
     },
     watch: {
         'filter.tag': function(newTags, oldTags) {

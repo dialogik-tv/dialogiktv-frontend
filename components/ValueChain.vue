@@ -68,7 +68,13 @@ export default {
     methods: {
         filterValueChain(e) {
             const category = e.target.parentElement.id;
-            this.$emit('pushCategoryToFilter', category);
+            if(!this.isActive(category)) {
+                this.$emit('pushCategoryToFilter', category);
+            } else {
+                this.selected.splice(this.selected.indexOf(category), 1);
+                this.$emit('unpushCategoryFromFilter', category);
+            }
+            
             this.$router.push(`/tools/${this.filterString}`);
         },
         isActive(id) {
