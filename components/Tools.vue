@@ -243,12 +243,12 @@ export default {
         'filter.category': function(newCategory, oldCategory) {
             this.$router.push(`/tools/${this.encodeFilter}`);
         },
-        'filter.sortBy': function(newSortBy, oldSortBy) {
-            this.$router.push(`/tools/${this.encodeFilter}`);
-        },
-        'filter.revertedSort': function(newRevertedSort, oldRevertedSort) {
-            this.$router.push(`/tools/${this.encodeFilter}`);
-        },
+        // 'filter.sortBy': function(newSortBy, oldSortBy) {
+        //     this.$router.push(`/tools/${this.encodeFilter}`);
+        // },
+        // 'filter.revertedSort': function(newRevertedSort, oldRevertedSort) {
+        //     this.$router.push(`/tools/${this.encodeFilter}`);
+        // },
         // Watch filter term and wait for user input
         'filter.term': function(newTerm, oldTerm) {
             if(!this.awaitingSearch) {
