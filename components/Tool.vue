@@ -36,7 +36,7 @@
                             <div class="row my-3">
                                 <div class="col-md-8">
                                     <svg id="value-chain" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 544.31 143.97">
-                                        <g v-for="category in categories" :id="category.id" :class="{ active: category.selected }" :style="{ opacity: category.relevance }">
+                                        <g v-for="category in categories" :key="category.id" :class="{ active: category.selected }" :style="{ opacity: category.relevance }">
                                             <polygon :points="category.polygon.points" />
                                             <g v-if="category.texts.length > 1 || category.id == '2dfef5a3-e1ac-4783-ae6e-8a8d93a655a0'">
                                                 <text v-if="category.id == '2dfef5a3-e1ac-4783-ae6e-8a8d93a655a0'" :x="category.texts[0].x + 58" :y="category.texts[0].y - 16">{{ category.relevance }}</text>
@@ -46,7 +46,7 @@
                                             <g v-else>
                                                 <text x="485" :y="category.texts[0].y + 1">{{ category.relevance }}</text>
                                             </g>
-                                            <text v-for="text in category.texts" :x="text.x" :y="text.y">{{ text.content }}</text>
+                                            <text v-for="text in category.texts" :key="text.content" :x="text.x" :y="text.y">{{ text.content }}</text>
                                         </g>
                                     </svg>
                                 </div>
@@ -62,8 +62,8 @@
 
                             <!-- Tags -->
                             <div class="mb-3">
-                                <span v-for="tag in tool.Tags">
-                                    <n-link :to="`/tools/tag/${tag.name}`" class="badge badge-secondary mr-1">{{ tag.name }}</n-link>
+                                <span v-for="tag in tool.Tags" :key="tag.name">
+                                    <n-link :to="`/tools/%7B%22term%22%3A%22%22%2C%22category%22%3A%5B%5D%2C%22tag%22%3A%5B%22${tag.name}%22%5D%2C%22sortBy%22%3A%22createdAt%22%2C%22revertedSort%22%3Atrue%7D`" class="badge badge-secondary mr-1">{{ tag.name }}</n-link>
                                 </span>
                                 <span v-if="$auth.loggedIn">
                                     <span v-if="!showTagInput">

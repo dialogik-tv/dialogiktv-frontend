@@ -6,6 +6,7 @@
                 <div class="d-flex justify-content-between">
                     <h1 class="display-1">Tools</h1>
                     <div>
+                        <n-link class="btn btn-outline-light" :to="'/tools/tags'">Schlagwortsuche</n-link>
                         <n-link :to="'/tool/new'" class="card-link btn btn-light text-primary">
                             <font-awesome-icon icon="plus-circle" class="text-primary mr-1" /> Tool hinzufügen
                         </n-link>
@@ -108,14 +109,15 @@
                                     </div>
                                 </div>
                                 <div v-if="filter.category.length > 0" class="col-md-4 text-md-right text-primary font-weight-bold">
-                                    <span v-if="filter.category.length > 1">
-                                        <div v-for="category in tool.Categories" :key="category.id">
-                                            <small class="text-muted">{{ category.name }}</small> {{ Math.round(tool.Categories[0].ToolCategory.relevance * 100) }} <span class="text-muted font-weight-normal">/ 100</span>
-                                        </div>
-                                    </span>
-                                    <span v-else>
-                                        {{ Math.round(tool.Categories[0].ToolCategory.relevance * 100) }} <span class="text-muted font-weight-normal">/ 100</span>
-                                    </span>
+                                    <div v-for="category in tool.Categories" :key="category.id">
+                                        <span v-if="filter.category.indexOf(category.id) > -1">
+                                            <small v-if="filter.category.length > 1" class="text-muted">
+                                                {{ category.name }}
+                                            </small>
+                                            {{ Math.round(category.ToolCategory.relevance * 100) }}
+                                            <span class="text-muted font-weight-normal">/ 100</span>
+                                        </span>
+                                    </div>
                                 </div>
                                 <div class="col-md-1 text-right">
                                     <span class="text-muted"><small>{{ tool.views }} <font-awesome-icon icon="eye" class="ml-1" /></small></span>
@@ -316,7 +318,6 @@ export default {
                     }
                 // by Category relevance
                 } else {
-                    console.log(a, b);
                     if(a.Categories[0].ToolCategory.relevance < b.Categories[0].ToolCategory.relevance) {
                         return down;
                     }
@@ -349,7 +350,6 @@ export default {
             }
             const { data } = await this.$axios.get(url);
             this.tools = data;
-            console.log(this.tools)
         } catch (error) {
             console.error('Error occured. Please try again.', error);
         }
