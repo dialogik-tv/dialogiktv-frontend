@@ -194,8 +194,10 @@ export default {
                 this.filter.sortBy = input.sortBy;
             }
 
+            console.log('kommt über die URL rein', input.revertedSort);
             if(input.revertedSort) {
                 this.filter.revertedSort = input.revertedSort;
+                console.log('filter in data()', this.filter.revertedSort);
             }
         }
 
@@ -267,13 +269,13 @@ export default {
     computed: {
         // Encode filter to be ready for use in URL
         encodeFilter: function() {
-            return JSON.stringify({
+            return encodeURIComponent(JSON.stringify({
                 term: this.filter.term,
                 category: this.filter.category,
                 tag: this.filter.tag,
                 sortBy: this.filter.sortBy,
                 revertedSort: this.filter.revertedSort
-            })
+            }))
         },
         // Decode filter from URL parameters
         decodeFilter() {
