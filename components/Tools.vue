@@ -200,11 +200,6 @@ export default {
                 console.log('filter in data()', this.filter.revertedSort);
             }
         }
-
-        // Set sort by correctly if this is the "value chain view"
-        if(this.$route.name == 'tools-value-chain-category' && this.$route.fullPath != '/tools/value-chain') {
-            this.filter.sortBy = 'categoryRelevance';
-        }
     },
     methods: {
         addTagToFilter(tag) {
