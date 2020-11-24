@@ -2,7 +2,7 @@
     <div class="mt-5">
         <span class="h3">Kategorien</span>
         <ul class="list-group">
-            <li v-for="category in categories" class="list-group-item">
+            <li v-for="category in categories" class="list-group-item" :key="category.id">
                 <input type="checkbox" :id="'id-'+category.id" v-model="category.selected" @change="updateCategory(tool, category.id, category.selected);" />
                 <label :for="'id-'+category.id">{{ category.name }} <code>{{ category.selected }}</code></label>
                 <div v-if="category.selected">
