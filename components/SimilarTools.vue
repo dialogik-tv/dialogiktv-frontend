@@ -10,7 +10,7 @@
                 <b-col cols="4" v-for="tool in similarTools.similarTools.slice(0,6)" :key="tool.tool.id" class="mb-2">
                     <b-card text-variant="dark" class="similar-tools-card p-1" body-class="p-3" footer-tag="footer" footer-class="text-right border-0 pt-0 pb-1">
                         <b-card-title class="h5"><n-link :to="`/tool/${tool.tool.slug}`">{{ tool.tool.title }}</n-link></b-card-title>
-                        <b-card-text class="similar-tools-card-text" v-if="tool.tool.description.length > 0">
+                        <b-card-text class="similar-tools-card-text" v-if="tool.tool.description && tool.tool.description.length > 0">
                             <small v-if="tool.tool.description.length < 100">{{ tool.tool.description }}</small>
                             <small v-else>{{ tool.tool.description.slice(0, 100) }}...</small>
                         </b-card-text>
@@ -42,6 +42,7 @@ export default {
             const url = `${process.env.API_URL}/tool/similar/${this.toolId}`;
             const { data } = await this.$axios.get(url);
             this.similarTools = data;
+            console.log(data);
         } catch (e) {
             console.log(e);
         }
