@@ -10,7 +10,7 @@
                 <div v-if="similarTools.length > 0">
                     <h2 class="mt-5">Ähnliche Tools</h2>
                     <b-row>
-                        <b-col cols="4" v-for="tool in similarTools" :key="tool.tool.id" class="mb-2">
+                        <b-col md="6" lg="4" v-for="tool in similarTools" :key="tool.tool.id" class="mb-2">
                             <b-card text-variant="dark" class="similar-tools-card p-1" body-class="p-3" footer-tag="footer" footer-class="text-right border-0 pt-0 pb-1">
                                 <b-card-title class="h5"><n-link :to="`/tool/${tool.tool.slug}`">{{ tool.tool.title }}</n-link></b-card-title>
                                 <b-card-text class="similar-tools-card-text" v-if="tool.tool.description && tool.tool.description.length > 0">
@@ -27,7 +27,7 @@
 
                 <h2 class="mt-5">Weitere Tools</h2>
                 <b-row>
-                    <b-col cols="4" v-for="tool in otherTools" :key="tool.tool.id" class="mb-2">
+                    <b-col md="6" lg="4" v-for="tool in otherTools" :key="tool.tool.id" class="mb-2">
                         <b-card text-variant="dark" class="similar-tools-card p-1" body-class="p-3" footer-tag="footer" footer-class="text-right border-0 pt-0 pb-1">
                             <b-card-title class="h5"><n-link :to="`/tool/${tool.tool.slug}`">{{ tool.tool.title }}</n-link></b-card-title>
                             <b-card-text class="similar-tools-card-text" v-if="tool.tool.description && tool.tool.description.length > 0">

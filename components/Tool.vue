@@ -10,7 +10,7 @@
             <p class="mb-0">Error fetching tool <code>{{ $fetchState.error.message }}</code></p>
         </div>
         <div v-else>
-            <div class="card p-5 text-muted">
+            <div class="card p-3 p-md-5 text-muted">
                     <div class="row">
 
                         <!-- Main container -->
