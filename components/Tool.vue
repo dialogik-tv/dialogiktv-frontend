@@ -127,11 +127,8 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="mt-5">
-                    <h2>Ähnliche Tools</h2>
-                    <SimilarTools :tool-id="tool.id" />
-                </div>
+                
+                <SimilarTools :tool-id="tool.id" />
             </div>
         </div>
     </div>
