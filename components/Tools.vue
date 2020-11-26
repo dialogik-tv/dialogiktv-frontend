@@ -194,10 +194,8 @@ export default {
                 this.filter.sortBy = input.sortBy;
             }
 
-            console.log('kommt über die URL rein', input.revertedSort);
             if(input.revertedSort) {
                 this.filter.revertedSort = input.revertedSort;
-                console.log('filter in data()', this.filter.revertedSort);
             }
         }
     },

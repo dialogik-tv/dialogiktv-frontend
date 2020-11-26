@@ -42,7 +42,6 @@ export default {
             const url = `${process.env.API_URL}/tool/similar/${this.toolId}`;
             const { data } = await this.$axios.get(url);
             this.similarTools = data;
-            console.log(data);
         } catch (e) {
             console.log(e);
         }
