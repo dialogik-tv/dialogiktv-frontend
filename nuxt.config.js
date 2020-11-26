@@ -58,7 +58,8 @@ module.exports = {
      ** Plugins to load before mounting the App
      */
     plugins: [
-        '@/plugins/textarea-autosize.js'
+        '@/plugins/textarea-autosize.js',
+        '@/plugins/lodash.js'
     ],
     /*
      ** Nuxt.js dev-modules
