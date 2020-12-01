@@ -3,7 +3,7 @@ require("dotenv").config();
 const ssl = require('redirect-ssl')
 
 module.exports = {
-    mode: 'spa',
+    ssr: false,
     /*
      ** Headers of the page
      */
