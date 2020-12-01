@@ -66,12 +66,8 @@
                                     <n-link :to="`/tools/%7B%22term%22%3A%22%22%2C%22category%22%3A%5B%5D%2C%22tag%22%3A%5B%22${tag.name}%22%5D%2C%22sortBy%22%3A%22createdAt%22%2C%22revertedSort%22%3Atrue%7D`" class="badge badge-secondary mr-1">{{ tag.name }}</n-link>
                                 </span>
                                 <span v-if="$auth.loggedIn">
-                                    <span v-if="!showTagInput">
-                                        <span class="badge badge-light add-tag-input-button" @click="showTagInput = true">+</span>
-                                    </span>
-                                    <span v-else>
-                                        <input ref="tagInput" v-model="tagInput" class="form-control form-control-sm w-auto d-inline" @keyup.enter="addTag" @keyup.escape="showTagInput = false" autofocus />
-                                    </span>
+                                    <input id="tag-input" list="tagInputList" v-model="tagInput" class="form-control form-control-sm w-auto d-inline" @keyup.enter="addTag" autofocus autocomplete="off" />
+                                    <b-form-datalist id="tagInputList" :options="tags"></b-form-datalist>
                                 </span>
                             </div>
 
@@ -151,17 +147,29 @@ export default {
                 title: 'Tool',
                 description: 'Beschreibung'
             },
+            tags: [],
             categories: [],
             editable: false,
-            tagInput: null,
-            showTagInput: false
+            tagInput: null
         };
     },
     created() {
         this.categories = ValueChainData.data().categories;
     },
+    async mounted() {
+        // Fetch tags for auto completion
+        const url = `${process.env.API_URL}/tags`;
+        const { data } = await this.$axios.get(url);
+        for(const item of data) {
+            this.tags.push(item.name);
+        }
+        this.tags.sort(function (a, b) {
+            return a.toLowerCase().localeCompare(b.toLowerCase());
+        });
+    },
     async fetch() {
         try {
+            // Fetch tool information
             const slug = this.$route.params.slug;
             const url = `${process.env.API_URL}/tool/${slug}`;
             const { data } = await this.$axios.get(url);
@@ -184,15 +192,17 @@ export default {
     },
     methods: {
         async addTag() {
-            const tag = this.$refs.tagInput._value;
+            const tag = this.tagInput;
             const url = `${process.env.API_URL}/tag/create`;
             try {
-                const { data } = await this.$axios.post(url, {
-                    tool: this.tool.id,
-                    tag: tag
-                });
-                this.tool.Tags.push( {name: tag} );
-                this.showTagInput = false;
+                const check = this.tool.Tags.filter(obj => Object.keys(obj).some(key => obj[key].includes(tag)));
+                if(check.length < 1) {
+                    const { data } = await this.$axios.post(url, {
+                        tool: this.tool.id,
+                        tag: tag
+                    });
+                    this.tool.Tags.push( {name: tag} );
+                }
                 this.tagInput = null;
             } catch (e) {
                 const text = 'Error adding tag';
@@ -254,6 +264,10 @@ export default {
 <style scoped>
 .add-tag-input-button {
     cursor: pointer;
+}
+
+#tag-input {
+    font-size: .7em !important;
 }
 
 #value-chain {
