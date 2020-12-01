@@ -296,7 +296,7 @@ export default {
             // Sort based on sortBy and revertedSort parameters
             return this.tools.sort(function compare(a, b) {
                 // Regular sorting
-                if(sortBy != 'categoryRelevance') {
+                if(sortBy != 'categoryRelevance' && sortBy != 'title') {
                     if(a[sortBy] < b[sortBy]) {
                         return down;
                     }
@@ -305,14 +305,14 @@ export default {
                     }
                 // by Title
                 } else if(sortBy == 'title') {
-                    if(a[sortBy].toLowerCase() < b[sortBy].toLowerCase()) {
-                        return down;
+                    if(reverted) {
+                        return b.title.toLowerCase().localeCompare(a.title.toLowerCase());
+                    } else {
+                        return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
                     }
-                    if(a[sortBy].toLowerCase() > b[sortBy].toLowerCase()) {
-                        return up;
-                    }
+                }
                 // by Category relevance
-                } else {
+                else {
                     if(a.Categories[0].ToolCategory.relevance < b.Categories[0].ToolCategory.relevance) {
                         return down;
                     }
