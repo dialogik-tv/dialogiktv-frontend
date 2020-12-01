@@ -9,16 +9,16 @@
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="mx-md-2">
-                    <b-nav-item v-if="type == 'light'" class="nav-item-light" href="/tools">Tools</b-nav-item>
-                    <b-nav-item v-else href="/tools">Tools</b-nav-item>
+                    <b-nav-item :class="{ 'nav-item-light': type == 'light' }" href="/tools">Tools</b-nav-item>
                 </b-navbar-nav>
                 <b-navbar-nav class="mx-md-2">
-                    <b-nav-item v-if="type == 'light'" class="nav-item-light" href="/tutorials">Tutorials</b-nav-item>
-                    <b-nav-item v-else href="/tutorials">Tutorials</b-nav-item>
+                    <b-nav-item :class="{ 'nav-item-light': type == 'light' }" href="/tutorials">Tutorials</b-nav-item>
                 </b-navbar-nav>
                 <b-navbar-nav class="mx-md-2">
-                    <b-nav-item v-if="type == 'light'" class="nav-item-light" href="/collections">Sammlungen</b-nav-item>
-                    <b-nav-item v-else href="/collections">Sammlungen</b-nav-item>
+                    <b-nav-item :class="{ 'nav-item-light': type == 'light' }" href="/collections">Sammlungen</b-nav-item>
+                </b-navbar-nav>
+                <b-navbar-nav v-if="$auth.user && $auth.user.isAdmin" class="mx-md-2">
+                    <b-nav-item :class="{ 'nav-item-light': type == 'light' }" href="/admin/queue">Queue</b-nav-item>
                 </b-navbar-nav>
 
                 <b-navbar-nav class="ml-auto text-center">
