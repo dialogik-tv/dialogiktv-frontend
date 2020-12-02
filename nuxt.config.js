@@ -59,7 +59,8 @@ module.exports = {
      */
     plugins: [
         '@/plugins/textarea-autosize.js',
-        '@/plugins/lodash.js'
+        '@/plugins/lodash.js',
+        '@/plugins/vuelidate.js'
     ],
     /*
      ** Nuxt.js dev-modules

@@ -30,7 +30,8 @@
         "lodash": "^4.17.20",
         "nuxt": "^2.14.7",
         "redirect-ssl": "^2.0.0",
-        "vue-textarea-autosize": "^1.1.1"
+        "vue-textarea-autosize": "^1.1.1",
+        "vuelidate": "^0.7.6"
     },
     "devDependencies": {
         "@nuxtjs/eslint-config": "^2.0.0",
