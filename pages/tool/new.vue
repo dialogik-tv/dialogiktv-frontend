@@ -32,6 +32,7 @@
                                 name="input-description"
                                 v-model="$v.form.description.$model"
                                 rows="3"
+                                max-rows="20"
                                 ></b-form-textarea>
                         </b-form-group>
 
