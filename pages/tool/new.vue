@@ -15,7 +15,7 @@
                             <b-form-input
                                 id="input-title"
                                 name="input-title"
-                                v-model="$v.form.title.$model"
+                                v-model.trim="$v.form.title.$model"
                                 :state="validateState('title')"
                                 aria-describedby="input-title-feedback"
                             ></b-form-input>
@@ -30,7 +30,7 @@
                              <b-form-textarea
                                 id="input-description"
                                 name="input-description"
-                                v-model="$v.form.description.$model"
+                                v-model.trim="$v.form.description.$model"
                                 rows="3"
                                 max-rows="20"
                                 ></b-form-textarea>
@@ -52,17 +52,17 @@
                         </b-form-group>
 
                         <!-- Documentation Link -->
-                        <b-form-group id="input-doclink-group" label="Link zur Dokumentation" label-for="input-doclink">
+                        <b-form-group id="input-docLink-group" label="Link zur Dokumentation" label-for="input-docLink">
                             <b-form-input
-                                id="input-doclink"
-                                name="input-doclink"
-                                v-model="$v.form.doclink.$model"
-                                :state="validateState('doclink')"
-                                aria-describedby="input-doclink-feedback"
+                                id="input-docLink"
+                                name="input-docLink"
+                                v-model="$v.form.docLink.$model"
+                                :state="validateState('docLink')"
+                                aria-describedby="input-docLink-feedback"
                             ></b-form-input>
 
                             <b-form-invalid-feedback
-                                id="input-doclink-feedback"
+                                id="input-docLink-feedback"
                             >Dieses Feld muss eine gültige URL (inkl. http[s]) sein.</b-form-invalid-feedback>
                         </b-form-group>
 
@@ -73,7 +73,7 @@
                             <b-form-input
                                 id="input-vendor"
                                 name="input-vendor"
-                                v-model="$v.form.vendor.$model"
+                                v-model.trim="$v.form.vendor.$model"
                                 :state="validateState('vendor')"
                                 aria-describedby="input-vendor-feedback"
                             ></b-form-input>
@@ -84,17 +84,17 @@
                         </b-form-group>
 
                         <!-- Vendor Link -->
-                        <b-form-group id="input-vendorlink-group" label="Link zum Anbieter" label-for="input-vendorlink">
+                        <b-form-group id="input-vendorLink-group" label="Link zum Anbieter" label-for="input-vendorLink">
                             <b-form-input
-                                id="input-vendorlink"
-                                name="input-vendorlink"
-                                v-model="$v.form.vendorlink.$model"
-                                :state="validateState('vendorlink')"
-                                aria-describedby="input-vendorlink-feedback"
+                                id="input-vendorLink"
+                                name="input-vendorLink"
+                                v-model="$v.form.vendorLink.$model"
+                                :state="validateState('vendorLink')"
+                                aria-describedby="input-vendorLink-feedback"
                             ></b-form-input>
 
                             <b-form-invalid-feedback
-                                id="input-vendorlink-feedback"
+                                id="input-vendorLink-feedback"
                             >Dieses Feld muss eine gültige URL (inkl. http[s]) sein.</b-form-invalid-feedback>
                         </b-form-group>
 
@@ -121,8 +121,8 @@ export default {
                 description: null,
                 link: null,
                 vendor: null,
-                vendorlink: null,
-                doclink: null
+                vendorLink: null,
+                docLink: null
             }
         };
     },
@@ -138,14 +138,14 @@ export default {
                 required,
                 url
             },
-            doclink: {
+            docLink: {
                 url
             },
             vendor: {
                 minLength: minLength(2),
                 maxLength: maxLength(40)
             },
-            vendorlink: {
+            vendorLink: {
                 url
             }
         }
@@ -159,6 +159,7 @@ export default {
 
             const url = `${process.env.API_URL}/tool/create`;
             try {
+                console.log(this.form);
                 const { status, data } = await this.$axios.post(url, this.form);
                 if(status == 200) {
                     const redirect = `/tool/${data.slug}`;
@@ -177,11 +178,11 @@ export default {
         resetForm() {
             this.form = {
                 title: null,
-                description: null,l,
+                description: null,
                 link: null,
-                doclink: null,
+                docLink: null,
                 vendor: null,
-                vendorlink: null
+                vendorLink: null
             };
 
             this.$nextTick(() => {
