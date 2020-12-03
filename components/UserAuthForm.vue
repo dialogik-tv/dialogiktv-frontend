@@ -53,7 +53,12 @@
                     name="input-password"
                     v-model="$v.form.password.$model"
                     :state="validateState('password')"
+                    aria-describedby="input-password-feedback"
                 ></b-form-input>
+
+                <b-form-invalid-feedback
+                    id="input-email-feedback"
+                >Dieses Feld darf (selbstverständlich) nicht leer sein.</b-form-invalid-feedback>
             </b-col>
         </b-form-row>
 
@@ -105,7 +110,7 @@
 
 <script>
 const { validationMixin, default: Vuelidate } = require('vuelidate');
-const { requiredIf, minLength, maxLength, email, alphaNum, helpers } = require('vuelidate/lib/validators');
+const { required, requiredIf, minLength, maxLength, email, alphaNum, helpers } = require('vuelidate/lib/validators');
 const alphaNumAndUmlaute = helpers.regex('alphaNumAndUmlaute', /^[A-Za-zÀ-ž\u0370-\u03FF\u0400-\u04FF]*$/);
 
 export default {
@@ -131,9 +136,12 @@ export default {
                 alphaNumAndUmlaute
             },
             email: {
+                required,
                 email
             },
-            password: {},
+            password: {
+                required
+            },
             firstname: {
                 minLength: minLength(2),
                 maxLength: maxLength(30)

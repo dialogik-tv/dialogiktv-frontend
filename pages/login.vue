@@ -3,6 +3,11 @@
         <div class="container">
             <div class="login-container">
                 <h1 class="display-1 mb-5">Login</h1>
+
+                <div v-if="error">
+                    <b-alert variant="danger" show><strong>Fehler:</strong> {{ error }}</b-alert>
+                </div>
+
                 <UserAuthForm buttonText="Login" :submitForm="loginUser" />
             </div>
         </div>
@@ -17,15 +22,32 @@ export default {
     components: {
         UserAuthForm
     },
+    
+    data() {
+        return {
+            error: false
+        };
+    },
     methods: {
         async loginUser(loginInfo) {
-            await this.$auth.loginWith('local', {
-                data: {
-                    email: loginInfo.email,
-                    password: loginInfo.password
+            try {
+                await this.$auth.loginWith('local', {
+                    data: {
+                        email: loginInfo.email,
+                        password: loginInfo.password
+                    }
+                });
+                this.error = false;
+                this.$router.push('/tools');
+            } catch(e) {
+                const status = e.response.status;
+                if(status == 401) {
+                    this.error = "Der Login ist fehlgeschlagen, bitte überprüfe Benutzername und Passwort.";
+                } else {
+                    this.error = "Es ist ein Fehler beim Login aufgetreten. Bitte versuche es erneut.";
                 }
-            });
-            this.$router.push('/tools');
+            }
+            
         }
     }
 }
