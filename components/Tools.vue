@@ -7,7 +7,7 @@
                     <h1 class="display-1">Tools</h1>
                     <div>
                         <n-link class="btn btn-outline-light" :to="'/tools/tags'">Schlagwortsuche</n-link>
-                        <n-link :to="'/tool/new'" class="card-link btn btn-light text-primary">
+                        <n-link v-if="$auth.user" :to="'/tool/new'" class="card-link btn btn-light text-primary">
                             <font-awesome-icon icon="plus-circle" class="text-primary mr-1" /> Tool hinzufügen
                         </n-link>
                     </div>

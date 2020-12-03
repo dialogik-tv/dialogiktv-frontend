@@ -1,65 +1,176 @@
 <template>
-    <form @submit.prevent="submitForm(userInfo)" autocomplete="off">
-        <div v-if="isRegistration" class="form-group row">
-            <label class="col-sm-2 col-form-label" for="inputUsername">Username</label>
-            <div class="col-sm-10">
-                <input v-model="userInfo.username" type="text" class="form-control" id="inputUsername">
-            </div>
+    <b-form @submit.prevent="checkAndSubmitForm(form)" autocomplete="off">
+        <!-- Username -->
+        <b-form-row v-if="isRegistration">
+            <b-col md="3">
+                <label id="input-username-label" label-for="input-username">Username</label>
+            </b-col>
+            <b-col md="9">
+                <b-form-input
+                    id="input-username"
+                    name="input-username"
+                    v-model.trim="$v.form.username.$model"
+                    :state="validateState('username')"
+                    aria-describedby="input-username-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback
+                    id="input-username-feedback"
+                >Dieses Feld ist ein Pflichtfeld, muss zwischen 4 und 24 Zeichen lang sein und darf nur alphanumerische Zeichen enthalten.</b-form-invalid-feedback>
+            </b-col>
+        </b-form-row>
+
+        <!-- Email -->
+        <b-form-row class="mt-2">
+            <b-col md="3">
+                <label id="input-email-label" label-for="input-email">Email</label>
+            </b-col>
+            <b-col md="9">
+                <b-form-input
+                    type="email"
+                    id="input-email"
+                    name="input-email"
+                    v-model.trim="$v.form.email.$model"
+                    :state="validateState('email')"
+                    aria-describedby="input-email-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback
+                    id="input-email-feedback"
+                >Dieses Feld ist ein Pflichtfeld und muss eine gültige Emailadresse sein.</b-form-invalid-feedback>
+            </b-col>
+        </b-form-row>
+
+        <!-- Password -->
+        <b-form-row class="mt-2">
+            <b-col md="3">
+                <label id="input-password-label" label-for="input-password">Passwort</label>
+            </b-col>
+            <b-col md="9">
+                <b-form-input
+                    type="password"
+                    id="input-password"
+                    name="input-password"
+                    v-model="$v.form.password.$model"
+                    :state="validateState('password')"
+                ></b-form-input>
+            </b-col>
+        </b-form-row>
+
+        <!-- Firstname -->
+        <b-form-row v-if="isRegistration" class="mt-2">
+            <b-col md="3">
+                <label id="input-firstname-label" label-for="input-firstname">Vorname</label>
+            </b-col>
+            <b-col md="9">
+                <b-form-input
+                    id="input-firstname"
+                    name="input-firstname"
+                    v-model.trim="$v.form.firstname.$model"
+                    :state="validateState('firstname')"
+                    aria-describedby="input-firstname-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback
+                    id="input-firstname-feedback"
+                >Dieses Feld muss zwischen 2 und 30 Zeichen lang sein.</b-form-invalid-feedback>
+            </b-col>
+        </b-form-row>
+
+        <!-- Lastname -->
+        <b-form-row v-if="isRegistration" class="mt-2">
+            <b-col md="3">
+                <label id="input-lastname-label" label-for="input-lastname">Nachname</label>
+            </b-col>
+            <b-col md="9">
+                <b-form-input
+                    id="input-lastname"
+                    name="input-lastname"
+                    v-model.trim="$v.form.lastname.$model"
+                    :state="validateState('lastname')"
+                    aria-describedby="input-lastname-feedback"
+                ></b-form-input>
+
+                <b-form-invalid-feedback
+                    id="input-lastname-feedback"
+                >Dieses Feld muss zwischen 2 und 40 Zeichen lang sein.</b-form-invalid-feedback>
+            </b-col>
+        </b-form-row>
+        
+        <div class="text-right mt-3">
+            <button type="submit" class="btn btn-lg btn-light">{{ buttonText }}</button>
         </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="inputEmail">E-Mail</label>
-            <div class="col-sm-10">
-                <input v-model="userInfo.email" type="email" class="form-control" id="inputEmail">
-            </div>
-        </div>
-        <div class="form-group row">
-            <label class="col-sm-2 col-form-label" for="inputPassword">Passwort</label>
-            <div class="col-sm-10">
-                <input v-model="userInfo.password" type="password" class="form-control" id="inputPassword" aria-describedby="passwordHelp">
-                <small v-if="isRegistration" id="passwordHelp" class="form-text text-light">Sei weise und wähle ein sicheres Passwort!</small>
-            </div>
-        </div>
-        <div v-if="isRegistration">
-            <hr class="my-4">
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="inputFirstname">Vorname</label>
-                <div class="col-sm-10">
-                    <input v-model="userInfo.firstname" type="text" class="form-control" id="inputFirstname" placeholder="(optional)">
-                </div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="inputLastname">Nachname</label>
-                <div class="col-sm-10">
-                    <input v-model="userInfo.lastname" type="text" class="form-control" id="inputLastname" placeholder="(optional)">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-10 offset-sm-2">
-                <button type="submit" class="btn btn-lg btn-light">{{ buttonText }}</button>
-            </div>
-        </div>
-    </form>
+    </b-form>
 </template>
 
-
 <script>
-    export default {
-        data() {
-            return {
-                userInfo: {
-                    username: '',
-                    firstname: '',
-                    lastname: '',
-                    email: '',
-                    password: ''
-                }
+const { validationMixin, default: Vuelidate } = require('vuelidate');
+const { requiredIf, minLength, maxLength, email, alphaNum, helpers } = require('vuelidate/lib/validators');
+const alphaNumAndUmlaute = helpers.regex('alphaNumAndUmlaute', /^[A-Za-zÀ-ž\u0370-\u03FF\u0400-\u04FF]*$/);
+
+export default {
+    mixins: [validationMixin],
+    data() {
+        return {
+            form: {
+                username: null,
+                firstname: null,
+                lastname: null,
+                email: null,
+                password: null
             }
+        }
+    },
+    props: ["submitForm", "buttonText", "isRegistration"],
+    validations: {
+        form: {
+            username: {
+                required: requiredIf('isRegistration'),
+                minLength: minLength(4),
+                maxLength: maxLength(24),
+                alphaNumAndUmlaute
+            },
+            email: {
+                email
+            },
+            password: {},
+            firstname: {
+                minLength: minLength(2),
+                maxLength: maxLength(30)
+            },
+            lastname: {
+                minLength: minLength(2),
+                maxLength: maxLength(40)
+            }
+        }
+    },
+    methods: {
+        validateState(name) {
+            const { $dirty, $error } = this.$v.form[name];
+            return $dirty ? !$error : null;
         },
-        props: ["submitForm", "buttonText", "isRegistration"]
+        checkAndSubmitForm(form) {
+            // Transform empty string ('') to null value (API allows null but no empty strings)
+            const keys = Object.keys(this.form);
+            keys.forEach((key, index) => {
+                if(this.form[key] === '') {
+                    this.form[key] = null
+                }
+            });
+
+            // Check for form errors before submit
+            this.$v.form.$touch();
+            if (this.$v.form.$anyError) {
+                return;
+            }
+
+    	    // Pass to parent form submission handling
+            return this.submitForm(form);
+        }
     }
+}
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 
 </style>

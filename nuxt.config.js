@@ -189,5 +189,6 @@ module.exports = {
         ssl.create({
             enabled: process.env.NODE_ENV === 'production'
         })
-    ]
+    ],
+    telemetry: false
 }

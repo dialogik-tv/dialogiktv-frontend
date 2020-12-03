@@ -39,6 +39,7 @@
                         <!-- Link -->
                         <b-form-group id="input-link-group" label="Link" label-for="input-link">
                             <b-form-input
+                                type="url"
                                 id="input-link"
                                 name="input-link"
                                 v-model="$v.form.link.$model"
@@ -54,6 +55,7 @@
                         <!-- Documentation Link -->
                         <b-form-group id="input-docLink-group" label="Link zur Dokumentation" label-for="input-docLink">
                             <b-form-input
+                                type="url"
                                 id="input-docLink"
                                 name="input-docLink"
                                 v-model="$v.form.docLink.$model"
@@ -86,6 +88,7 @@
                         <!-- Vendor Link -->
                         <b-form-group id="input-vendorLink-group" label="Link zum Anbieter" label-for="input-vendorLink">
                             <b-form-input
+                                type="url"
                                 id="input-vendorLink"
                                 name="input-vendorLink"
                                 v-model="$v.form.vendorLink.$model"
@@ -109,8 +112,9 @@
 </template>
 
 <script>
-const { validationMixin, default: Vuelidate } = require('vuelidate')
-const { required, minLength, maxLength, url, alphaNum } = require('vuelidate/lib/validators')
+const { validationMixin, default: Vuelidate } = require('vuelidate');
+const { required, minLength, maxLength, url, helpers } = require('vuelidate/lib/validators');
+const alphaNumAndWhitespaces = helpers.regex('alphaNumAndWhitespaces', /^[A-Za-zÀ-ž\u0370-\u03FF\u0400-\u04FF\s]*$/);
 
 export default {
     mixins: [validationMixin],
@@ -131,7 +135,8 @@ export default {
             title: {
                 required,
                 minLength: minLength(3),
-                maxLength: maxLength(40)
+                maxLength: maxLength(40),
+                alphaNumAndWhitespaces
             },
             description: {},
             link: {
@@ -152,14 +157,23 @@ export default {
     },
     methods: {
         async addTool() {
+            // Transform empty string ('') to null value (API allows null but no empty strings)
+            const keys = Object.keys(this.form);
+            keys.forEach((key, index) => {
+                if(this.form[key] === '') {
+                    this.form[key] = null
+                }
+            });
+
+            // Check for form errors before submit
             this.$v.form.$touch();
             if (this.$v.form.$anyError) {
                 return;
             }
 
+            // Pass user data to API
             const url = `${process.env.API_URL}/tool/create`;
             try {
-                console.log(this.form);
                 const { status, data } = await this.$axios.post(url, this.form);
                 if(status == 200) {
                     const redirect = `/tool/${data.slug}`;

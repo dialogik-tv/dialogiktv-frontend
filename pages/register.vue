@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import UserAuthForm from '@/components/UserAuthForm'
+import UserAuthForm from '@/components/UserAuthForm';
 
 export default {
     layout: 'landing',
@@ -24,7 +24,7 @@ export default {
             await this.$auth.loginWith('local', {
                 data: registrationInfo
             });
-            this.$router.push('/');
+            this.$router.push('/tools');
         }
     }
 }
