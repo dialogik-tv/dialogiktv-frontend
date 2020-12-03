@@ -189,6 +189,11 @@ export default {
                 this.$v.$reset();
             });
         }
-    }
+    },
+    created() {
+        if(!this.$auth.user) {
+            this.$router.push('/tools');
+        }
+    },
 }
 </script>

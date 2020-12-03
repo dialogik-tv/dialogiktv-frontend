@@ -25,7 +25,7 @@ export default {
                     password: loginInfo.password
                 }
             });
-            this.$router.push('/');
+            this.$router.push('/tools');
         }
     }
 }
