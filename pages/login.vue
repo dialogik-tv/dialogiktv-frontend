@@ -22,7 +22,6 @@ export default {
     components: {
         UserAuthForm
     },
-    
     data() {
         return {
             error: false
@@ -47,7 +46,6 @@ export default {
                     this.error = "Es ist ein Fehler beim Login aufgetreten. Bitte versuche es erneut.";
                 }
             }
-            
         }
     }
 }

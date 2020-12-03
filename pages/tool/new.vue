@@ -114,7 +114,7 @@
 <script>
 const { validationMixin, default: Vuelidate } = require('vuelidate');
 const { required, minLength, maxLength, url, helpers } = require('vuelidate/lib/validators');
-const alphaNumAndWhitespaces = helpers.regex('alphaNumAndWhitespaces', /^[A-Za-zÀ-ž\u0370-\u03FF\u0400-\u04FF\s]*$/);
+const alphaNumAndWhitespaces = helpers.regex('alphaNumAndWhitespaces', /^[A-Za-zÀ-ž\u0370-\u03FF\u0400-\u04FF\s]+$/);
 
 export default {
     mixins: [validationMixin],

@@ -3,7 +3,12 @@
         <div class="container">
             <div class="registration-container">
                 <h1 class="display-4 mb-5">Neuen Account anlegen</h1>
-                <UserAuthForm buttonText="Registrieren" :submitForm="registerUser" isRegistration="true" />
+
+                <div v-if="error">
+                    <b-alert variant="danger" show><strong>Fehler:</strong> {{ error }}</b-alert>
+                </div>
+
+                <UserAuthForm buttonText="Registrieren" :submitForm="registerUser" :isRegistration="true" />
             </div>
         </div>
     </div>
@@ -17,14 +22,29 @@ export default {
     components: {
         UserAuthForm
     },
+    data() {
+        return {
+            error: false
+        };
+    },
     methods: {
         async registerUser(registrationInfo) {
-            let url = `${process.env.API_URL}/register`;
-            await this.$axios.post(url, registrationInfo);
-            await this.$auth.loginWith('local', {
-                data: registrationInfo
-            });
-            this.$router.push('/tools');
+            try {
+                let url = `${process.env.API_URL}/register`;
+                await this.$axios.post(url, registrationInfo);
+                await this.$auth.loginWith('local', {
+                    data: registrationInfo
+                });
+                this.error = false;
+                this.$router.push('/tools');
+            } catch(e) {
+                const status = e.response.status;
+                if(status == 422) {
+                    this.error = "Die eingebenen Daten sind nicht valide. Bitte achte auf die Hinweise.";
+                } else {
+                    this.error = "Es ist ein Fehler bei der Registrierung aufgetreten. Bitte versuche es erneut.";
+                }
+            }
         }
     }
 }
