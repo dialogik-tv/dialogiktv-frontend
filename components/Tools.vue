@@ -60,6 +60,26 @@
                     </div>
                     <div>
                         <div class="d-inline-block">
+                            <div @click="typesVisible = !typesVisible" class="btn btn-sm btn-secondary text-right">Tool-Arten</div>
+                            <transition name="roll-down">
+                                <div id="types-selector" v-if="typesVisible">
+                                    <!-- <div v-for="type in types" :key="type">
+                                        <input type="checkbox" :id="`type-${type}`" :name="`type-${type}`" />
+                                        <label :for="`type-${type}`" class="ml-1">{{ type }}</label>
+                                    </div> -->
+                                    <b-form-group class="bg-secondary text-light p-3 mb-0 border border-light">
+                                        <b-form-checkbox-group
+                                            id="types-group"
+                                            v-model="selectedTypes"
+                                            :options="types"
+                                            name="types-group"
+                                            stacked
+                                        ></b-form-checkbox-group>
+                                    </b-form-group>
+                                </div>
+                            </transition>
+                        </div>
+                        <div class="d-inline-block">
                             <b-dropdown right size="sm" :text="filter.labels[filter.sortBy].label" class="m-md-2">
                                 <b-dropdown-item @click="filter.sortBy='views'">Views</b-dropdown-item>
                                 <b-dropdown-item @click="filter.sortBy='title'">Name</b-dropdown-item>
@@ -171,6 +191,16 @@ export default {
                     }
                 },
             },
+            types: [
+                'Webapp',
+                'Desktop Application',
+                'Mobile Application',
+                'API',
+                'Script',
+                'Plugin'
+            ],
+            typesVisible: false,
+            selectedTypes: [],
             valueChainVisible: false,
         }
     },
@@ -189,11 +219,15 @@ export default {
             }
             if(input.tag) {
                 this.filter.tag = input.tag;
+                for(const tag of input.tag) {
+                    if(this.types.indexOf(tag) > -1) {
+                        this.selectedTypes.push(tag);
+                    }
+                }
             }
             if(input.sortBy) {
                 this.filter.sortBy = input.sortBy;
             }
-
             if(input.revertedSort) {
                 this.filter.revertedSort = input.revertedSort;
             }
@@ -258,6 +292,15 @@ export default {
             }
             this.awaitingSearch = true;
         },
+        selectedTypes: function(newTypes, oldTypes) {
+            for(const type of this.types) {
+                if(this.selectedTypes.indexOf(type) > -1) {
+                    this.addTagToFilter(type);
+                } else {
+                    this.removeTagFromFilter(type);
+                }
+            }
+        }
     },
     computed: {
         // Encode filter to be ready for use in URL
@@ -373,6 +416,11 @@ export default {
 
 .tag-selector, .tag-unselector {
     cursor: pointer;
+}
+
+#types-selector {
+    position: absolute;
+    z-index: 100;
 }
 
 @keyframes appear {

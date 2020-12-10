@@ -1,0 +1,30 @@
+html {
+    scroll-behavior: smooth;
+}
+
+/* roll-down */
+.roll-down-leave-active,
+.roll-down-enter-active,
+.roll-down-enter,
+.roll-down-enter-to,
+.roll-down-leave-to,
+.roll-down-leave {
+    overflow: hidden;
+}
+
+.roll-down-leave-active,
+.roll-down-enter-active {
+    transition: height .5s;
+}
+.roll-down-enter {
+    height: 0%;
+}
+.roll-down-enter-to,
+.roll-down-leave {
+    height: 100%;
+    overflow: hidden;
+}
+.roll-down-leave-to {
+    height: 0%;
+    overflow: hidden;
+}

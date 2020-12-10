@@ -101,7 +101,10 @@ module.exports = {
         bootstrapCSS: false,
         bootstrapVueCSS: false
     },
-    css: ['@/assets/scss/custom.scss'],
+    css: [
+        '@/assets/scss/custom.scss',
+        '~assets/css/style.css'
+    ],
     /*
      ** dotenv
      */
