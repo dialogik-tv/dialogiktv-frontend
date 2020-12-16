@@ -159,7 +159,7 @@ module.exports = {
         icons: {
             solid: [
                 'faSearch', 'faSyncAlt', 'faTimesCircle', 'faPlusCircle',
-                'faEye', 'faDownload', 'faPen', 'faCog', 'faSortAmountDown',
+                'faEye', 'faPen', 'faCog', 'faSortAmountDown', 'faExternalLinkAlt',
                 'faSortAmountDownAlt', 'faCaretRight', 'faCaretDown'
             ],
             // regular: [

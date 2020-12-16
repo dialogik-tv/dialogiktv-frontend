@@ -98,7 +98,7 @@
                         <!-- Sidebar -->
                         <div class="col-lg-3 mt-5 mt-lg-0">
                             <!-- Download -->
-                            <a class="btn btn-sm btn-block btn-primary text-light font-weight-bold" target="_blank" :href="tool.link">Download <font-awesome-icon icon="download" class="ml-1" /></a>
+                            <a class="btn btn-sm btn-block btn-primary text-light font-weight-bold" target="_blank" :href="tool.link"><font-awesome-icon icon="external-link-alt" class="mr-1" /> zur Webseite</a>
 
                             <!-- Vendor information -->
                             <div v-if="tool.vendor" class="mt-2">

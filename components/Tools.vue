@@ -116,17 +116,24 @@
                 <div v-else>
                     <ul class="list-group text-muted">
                         <li v-for="tool in sortedTools" :key="tool.slug" class="list-group-item py-3">
+                            <div class="d-flex justify-content-between">
+                                <n-link :to="`/tool/${tool.slug}`">
+                                    {{ tool.title }}
+                                    <small v-if="tool.vendor" class="text-muted">von {{ tool.vendor }}</small>
+                                </n-link>
+                                <span class="text-muted"><small>{{ tool.views }} <font-awesome-icon icon="eye" class="ml-1" /></small></span>
+                            </div>
+
                             <div class="row">
                                 <div class="col-md">
-                                    <n-link :to="`/tool/${tool.slug}`">
-                                        {{ tool.title }}
-                                        <small v-if="tool.vendor" class="text-muted">von {{ tool.vendor }}</small>
-                                    </n-link>
                                     <div>
-                                        <span v-for="tag in tool.Tags" :key="tag.id">
-                                            <span class="badge badge-secondary mr-1 tag-selector" @click="addTagToFilter(tag.name)">{{ tag.name }}</span>
+                                        <span v-for="tag in tagsWithoutToolTypes(tool.Tags)" :key="tag.name">
+                                            <span class="badge badge-secondary tag-selector mr-1" @click="addTagToFilter(tag.name)">{{ tag.name }}</span>
                                         </span>
                                     </div>
+                                </div>
+                                <div class="col-md-3 text-md-right">
+                                    <span v-for="tag in tagsWithTypesOnly(tool.Tags)" :key="tag.name" @click="addTagToFilter(tag.name)" class="badge badge-primary tag-selector tag-type-badge mt-1 mr-1">{{ tag.name }}</span>
                                 </div>
                                 <div v-if="filter.category.length > 0" class="col-md-4 text-md-right text-primary font-weight-bold">
                                     <div v-for="category in tool.Categories" :key="category.id">
@@ -138,9 +145,6 @@
                                             <span class="text-muted font-weight-normal">/ 100</span>
                                         </span>
                                     </div>
-                                </div>
-                                <div class="col-md-1 text-right">
-                                    <span class="text-muted"><small>{{ tool.views }} <font-awesome-icon icon="eye" class="ml-1" /></small></span>
                                 </div>
                             </div>
                         </li>
@@ -264,6 +268,18 @@ export default {
         unpushCategoryToFilter(category) {
             this.removeCategoryFromFilter(category);
         },
+        tagsWithoutToolTypes(tags) {
+            const types = this.types;
+            return tags.filter(function(t) {
+                return types.indexOf(t.name) < 0;
+            });
+        },
+        tagsWithTypesOnly(tags) {
+            const types = this.types;
+            return tags.filter(function(t) {
+                return types.indexOf(t.name) > -1;
+            });
+        }
     },
     watch: {
         'filter.tag': function(newTags, oldTags) {
@@ -416,6 +432,14 @@ export default {
 
 .tag-selector, .tag-unselector {
     cursor: pointer;
+}
+
+.tag-type-badge {
+    font-size: 1em;
+}
+
+.tag-type-badge:last-child {
+    margin-right: 0 !important;
 }
 
 #types-selector {
