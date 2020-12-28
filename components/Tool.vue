@@ -73,7 +73,7 @@
 
                             <!-- Description -->
                             <div v-if="!editable">
-                                <p v-if="tool.description" v-html="$md.render(tool.description)" class="lead mb-0"></p>
+                                <p v-if="tool.description" v-html="$md.render(tool.description)" class="mb-0"></p>
                             </div>
                             <div v-else>
                                 <textarea-autosize @keyup.ctrl.enter="updateTool"
