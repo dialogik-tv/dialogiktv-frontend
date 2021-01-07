@@ -246,15 +246,15 @@ export default {
         return {
             title: `${this.tool.title} auf dialogikTV`,
             meta: [
-                { name: 'og:title', content: `${this.tool.title} auf dialogikTV` },
-                { name: 'og:description', content: this.tool.description },
+                { hid: 'og:title', vmid: 'og:title', name: 'og:title', content: `${this.tool.title} auf dialogikTV` },
+                { hid: 'og:description', vmid: 'og:description', name: 'og:description', content: this.tool.description },
                 // Twitter meta settings
-                { name: 'twitter:card', content: 'summary' },
-                { name: 'twitter:site', content: '@dialogikTV' },
-                { property: 'twitter:domain', content: 'dialogik.tv' },
-                { property: 'twitter:url', content: `https://dialogik.tv/tool/${this.tool.slug}` },
-                { name: 'twitter:title', content: `${this.tool.title} auf dialogikTV` },
-                { name: 'twitter:description', content: this.tool.description },
+                { hid: 'twitter:card', vmid: 'twitter:card', name: 'twitter:card', content: 'summary' },
+                { hid: 'twitter:site', vmid: 'twitter:site', name: 'twitter:site', content: '@dialogikTV' },
+                { hid: 'twitter:domain', vmid: 'twitter:domain', property: 'twitter:domain', content: 'dialogik.tv' },
+                { hid: 'twitter:url', vmid: 'twitter:url', property: 'twitter:url', content: `https://dialogik.tv/tool/${this.tool.slug}` },
+                { hid: 'twitter:title', vmid: 'twitter:title', name: 'twitter:title', content: `${this.tool.title} auf dialogikTV` },
+                { hid: 'twitter:description', vmid: 'twitter:description', name: 'twitter:description', content: this.tool.description },
             ]
         }
     },
