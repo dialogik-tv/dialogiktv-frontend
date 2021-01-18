@@ -25,15 +25,16 @@ module.exports = {
             { name: 'theme-color', content: '#ffffff' },
             { hid: 'og:url', property: 'og:url', content: 'https://dialogik.tv' },
             { hid: 'og:title', property: 'og:title', content: 'dialogikTV' },
-            { hid: 'og:image', property: 'og:image', content: '/favicon-96x96.png' },
+            { hid: 'og:image', property: 'og:image', content: `${process.env.BASE_URL}/favicon-96x96.png` },
             { hid: 'og:type', property: 'og:type', content: 'website' },
+            { hid: 'og:site_name', property: 'og:site_name', content: 'dialogikTV' },
             {
                 hid: 'og:description',
                 property: 'og:description',
                 content: 'Tools und Tutorials für Streamer und Inhaltserzeuger'
             },
-            { hid: 'twitter:card', name: 'twitter:card', content: 'summary' },
-            { hid: 'twitter:site', name: 'twitter:site', content: '@dialogikTV' },
+            { hid: 'twitter:card', property: 'twitter:card', content: 'summary' },
+            { hid: 'twitter:site', property: 'twitter:site', content: '@dialogikTV' },
         ],
         link: [
             { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },

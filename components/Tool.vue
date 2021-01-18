@@ -190,6 +190,18 @@ export default {
             console.log(e);
         }
     },
+    computed: {
+        permalink: function() {
+            return `${process.env.BASE_URL}/tool/${this.tool.slug}`;
+        },
+        excerpt: function() {
+            if(this.tool.description.length > 200) {
+                return this.tool.description.substring(0, 197) + '...';
+            } else {
+                return this.tool.description;
+            }
+        }
+    },
     methods: {
         async addTag() {
             const tag = this.tagInput;
@@ -246,15 +258,16 @@ export default {
         return {
             title: `${this.tool.title} auf dialogikTV`,
             meta: [
-                { hid: 'og:title', vmid: 'og:title', name: 'og:title', content: `${this.tool.title} auf dialogikTV` },
-                { hid: 'og:description', vmid: 'og:description', name: 'og:description', content: this.tool.description },
+                { hid: 'og:title', property: 'og:title', content: `${this.tool.title} auf dialogikTV` },
+                { hid: 'og:description', property: 'og:description', content: this.excerpt },
+                { hid: 'og:url', property: 'og:url', content: this.permalink },
                 // Twitter meta settings
-                { hid: 'twitter:card', vmid: 'twitter:card', name: 'twitter:card', content: 'summary' },
-                { hid: 'twitter:site', vmid: 'twitter:site', name: 'twitter:site', content: '@dialogikTV' },
-                { hid: 'twitter:domain', vmid: 'twitter:domain', property: 'twitter:domain', content: 'dialogik.tv' },
-                { hid: 'twitter:url', vmid: 'twitter:url', property: 'twitter:url', content: `https://dialogik.tv/tool/${this.tool.slug}` },
-                { hid: 'twitter:title', vmid: 'twitter:title', name: 'twitter:title', content: `${this.tool.title} auf dialogikTV` },
-                { hid: 'twitter:description', vmid: 'twitter:description', name: 'twitter:description', content: this.tool.description },
+                { hid: 'twitter:card', property: 'twitter:card', content: 'summary' },
+                { hid: 'twitter:site', property: 'twitter:site', content: '@dialogikTV' },
+                { hid: 'twitter:domain', property: 'twitter:domain', content: 'dialogik.tv' },
+                { hid: 'twitter:url', property: 'twitter:url', content: this.permalink },
+                { hid: 'twitter:title', property: 'twitter:title', content: `${this.tool.title} auf dialogikTV` },
+                { hid: 'twitter:description', property: 'twitter:description', content: this.excerpt },
             ]
         }
     },
