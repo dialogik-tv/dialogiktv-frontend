@@ -8,6 +8,11 @@ html {
 }
 
 @font-face {
+    font-family: "Inter";
+    src: url("../fonts/Inter-ExtraBold.ttf");
+}
+
+@font-face {
     font-family: "Open Sans";
     src: url("../fonts/OpenSans-Regular.ttf");
 }
@@ -17,7 +22,9 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "Racing Sans One";
+    font-family: "Inter";
+    font-weight: 900;
+    letter-spacing: -2px;
 }
 
 /* roll-down */
