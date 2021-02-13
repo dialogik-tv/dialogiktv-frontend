@@ -25,9 +25,9 @@
                     <div class="mr-md-3 mb-3 mb-md-0 mt-md-1">
                         <a target="_blank" href="https://twitter.com/dialogikTV"><font-awesome-icon :icon="['fab', 'twitter']" class="text-light mr-1" /></a>
                         <a target="_blank" href="https://www.twitch.tv/dialogikTV"><font-awesome-icon :icon="['fab', 'twitch']" class="text-light mr-1" /></a>
-                        <a target="_blank" href="http://discord.dialogik.tv"><font-awesome-icon :icon="['fab', 'discord']" class="text-light mr-1" /></a>
-                        <a target="_blank" href="http://youtube.dialogik.tv"><font-awesome-icon :icon="['fab', 'youtube']" class="text-light mr-1" /></a>
-                        <a target="_blank" href="https://www.github.com/dialogik-tv"><font-awesome-icon :icon="['fab', 'github']" class="text-light mr-1" /></a>
+                        <a target="_blank" href="https://dialogik.tv/discord"><font-awesome-icon :icon="['fab', 'discord']" class="text-light mr-1" /></a>
+                        <a target="_blank" href="https://dialogik.tv/youtube"><font-awesome-icon :icon="['fab', 'youtube']" class="text-light mr-1" /></a>
+                        <a target="_blank" href="https://dialogik.tv/github"><font-awesome-icon :icon="['fab', 'github']" class="text-light mr-1" /></a>
                     </div>
                     <div v-if="$auth.loggedIn">
                         <small class="text-light">{{ $auth.user.username }}</small>
