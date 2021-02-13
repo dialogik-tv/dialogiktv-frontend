@@ -161,7 +161,8 @@ module.exports = {
             solid: [
                 'faSearch', 'faSyncAlt', 'faTimesCircle', 'faPlusCircle',
                 'faEye', 'faPen', 'faCog', 'faSortAmountDown', 'faExternalLinkAlt',
-                'faSortAmountDownAlt', 'faCaretRight', 'faCaretDown'
+                'faSortAmountDownAlt', 'faCaretRight', 'faCaretDown',
+                'faCircleNotch'
             ],
             // regular: [
             //     'faAdjust'
