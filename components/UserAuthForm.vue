@@ -111,7 +111,7 @@
 <script>
 const { validationMixin, default: Vuelidate } = require('vuelidate');
 const { required, requiredIf, minLength, maxLength, email, alphaNum, helpers } = require('vuelidate/lib/validators');
-const alphaNumAndUmlaute = helpers.regex('alphaNumAndUmlaute', /^[A-Za-zÀ-ž\u0370-\u03FF\u0400-\u04FF]+$/);
+const alphaNumAndUmlaute = helpers.regex('alphaNumAndUmlaute', /^[A-Za-zÀ-ž0-9\u0370-\u03FF\u0400-\u04FF]+$/);
 
 export default {
     mixins: [validationMixin],
