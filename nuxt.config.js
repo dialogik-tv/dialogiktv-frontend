@@ -4,6 +4,7 @@ const ssl = require('redirect-ssl')
 
 module.exports = {
     target: 'static',
+    mode: 'universal',
     ssr: false,
     /*
      ** Headers of the page
