@@ -55,7 +55,7 @@
                         <div v-if="manageable" class="row">
                             <div class="col-md-6">
                                 <ul class="list-group">
-                                    <li v-for="tool in filteredTools" class="list-group-item text-dark d-flex justify-content-between p-0">
+                                    <li v-for="tool in filteredTools" :key="tool.id" class="list-group-item text-dark d-flex justify-content-between p-0">
                                         <small class="p-1">
                                             {{ tool.title }}
                                         </small>
@@ -70,22 +70,23 @@
                     </div>
 
                     <div class="my-3">
-                        <div class="row">
-                            <div v-for="tool in this.collection.Tools" class="col-md-4 col-lg-3">
-                                <div class="card">
+                        <div>
+                            <div v-for="tool in this.collection.Tools" :key="tool.id" class="list-group">
+                                <div class="list-group-item mb-3">
                                     <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-                                    <div class="card-body">
+                                    <div>
                                         <n-link :to="`/tool/${tool.slug}`"><h5 class="card-title">{{ tool.title }}</h5></n-link>
                                         <p v-if="tool.description" class="card-text text-muted">
-                                            <small v-html="$md.render(tool.description)"></small>
+                                            <small v-if="tool.description.length > 120" v-html="$md.render(tool.description).substring(0, 120) + '...'"></small>
+                                            <small v-else v-html="$md.render(tool.description)"></small>
                                         </p>
                                     </div>
-                                    <ul class="list-group list-group-flush">
-                                        <li v-if="$auth.loggedIn && $auth.user.id === collectionOwnerId" class="list-group-item">
+                                    <ul>
+                                        <li v-if="$auth.loggedIn && $auth.user.id === collectionOwnerId">
                                             <button @click="removeToolFromCollection(tool)" class="btn btn-sm btn-success">aus Sammlung entfernen</button>
                                         </li>
-                                        <li class="list-group-item">
-                                            <n-link v-for="tag in tool.Tags" :to="`/tools/tag/${tag.name}`" :key="tag.name" class="badge badge-secondary mr-1">{{ tag.name }}</n-link>
+                                        <li v-for="tag in tool.Tags" :key="tag.name">
+                                            <n-link :to="`/tools/tag/${tag.name}`" class="badge badge-secondary mr-1">{{ tag.name }}</n-link>
                                         </li>
                                     </ul>
                                     <!-- <div class="card-body">
