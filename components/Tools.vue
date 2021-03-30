@@ -92,8 +92,8 @@
                                 <template v-slot:button-content>
                                     <font-awesome-icon :icon="getSortDirectionFaIcon" />
                                 </template>
-                                <b-dropdown-item @click="filter.revertedSort=false"><font-awesome-icon icon="sort-amount-down-alt" /> aufsteigend</b-dropdown-item>
-                                <b-dropdown-item @click="filter.revertedSort=true"><font-awesome-icon icon="sort-amount-down" /> absteigend</b-dropdown-item>
+                                <b-dropdown-item @click="filter.sort='asc'"><font-awesome-icon icon="sort-amount-down-alt" /> aufsteigend</b-dropdown-item>
+                                <b-dropdown-item @click="filter.sort='desc'"><font-awesome-icon icon="sort-amount-down" /> absteigend</b-dropdown-item>
                             </b-dropdown>
                         </div>
                         <button @click="$fetch" class="btn btn-sm btn-secondary"><font-awesome-icon icon="sync-alt" class="text-light" /></button>
@@ -171,7 +171,7 @@ export default {
                 category: [],
                 tag: [],
                 sortBy: 'createdAt',
-                revertedSort: true,
+                sort: 'asc',
                 labels: {
                     'views': {
                         'label': 'Views',
@@ -232,8 +232,8 @@ export default {
             if(input.sortBy) {
                 this.filter.sortBy = input.sortBy;
             }
-            if(input.revertedSort) {
-                this.filter.revertedSort = input.revertedSort;
+            if(input.sort) {
+                this.filter.sort = input.sort;
             }
         }
     },
@@ -279,29 +279,32 @@ export default {
             return tags.filter(function(t) {
                 return types.indexOf(t.name) > -1;
             });
+        },
+        handleFilterChangeRequest() {
+            this.$router.push(`/tools/${this.encodeFilter}`);
         }
     },
     watch: {
         'filter.tag': function(newTags, oldTags) {
-            this.$router.push(`/tools/${this.encodeFilter}`);
+            this.handleFilterChangeRequest();
         },
         'filter.category': function(newCategory, oldCategory) {
-            this.$router.push(`/tools/${this.encodeFilter}`);
+            this.handleFilterChangeRequest();
         },
-        // 'filter.sortBy': function(newSortBy, oldSortBy) {
-        //     this.$router.push(`/tools/${this.encodeFilter}`);
-        // },
-        // 'filter.revertedSort': function(newRevertedSort, oldRevertedSort) {
-        //     this.$router.push(`/tools/${this.encodeFilter}`);
-        // },
+        'filter.sortBy': function(newSortBy, oldSortBy) {
+            this.handleFilterChangeRequest();
+        },
+        'filter.sort': function(newSort, oldSort) {
+            this.handleFilterChangeRequest();
+        },
         // Watch filter term and wait for user input
         'filter.term': function(newTerm, oldTerm) {
             if(!this.awaitingSearch) {
                 if(newTerm.length < 1) {
-                    this.$router.push(`/tools/${this.encodeFilter}`);
+                    this.handleFilterChangeRequest();
                 } else {
                     setTimeout(() => {
-                        this.$router.push(`/tools/${this.encodeFilter}`);
+                        this.handleFilterChangeRequest();
                         this.awaitingSearch = false;
                     }, 1000);
                 }
@@ -326,7 +329,7 @@ export default {
                 category: this.filter.category,
                 tag: this.filter.tag,
                 sortBy: this.filter.sortBy,
-                revertedSort: this.filter.revertedSort
+                sort: this.filter.sort
             }))
         },
         // Decode filter from URL parameters
@@ -335,8 +338,8 @@ export default {
         },
         sortedTools() {
             // Make values static so we can use them later in the sort function
-            const reverted = this.filter.revertedSort;
-            const sortBy   = this.filter.sortBy;
+            const sort   = this.filter.sort;
+            const sortBy = this.filter.sortBy;
 
             // Define our labels
             const labels = this.filter.labels;
@@ -344,15 +347,15 @@ export default {
             // Our increments for up and down
             let up   = +1;
             let down = -1;
-            if(reverted) {
+            if(sort === 'desc') {
                 up   = -1;
                 down = +1;
             }
 
             // Get verbalized direction to sort
-            const direction = (reverted ? labels[sortBy].desc : labels[sortBy].asc);
+            const direction = (sort === 'desc' ? labels[sortBy].desc : labels[sortBy].asc);
 
-            // Sort based on sortBy and revertedSort parameters
+            // Sort based on sortBy and sort parameters
             return this.tools.sort(function compare(a, b) {
                 // Regular sorting
                 if(sortBy != 'categoryRelevance' && sortBy != 'title') {
@@ -364,7 +367,7 @@ export default {
                     }
                 // by Title
                 } else if(sortBy == 'title') {
-                    if(reverted) {
+                    if(sort === 'desc') {
                         return b.title.toLowerCase().localeCompare(a.title.toLowerCase());
                     } else {
                         return a.title.toLowerCase().localeCompare(b.title.toLowerCase());
@@ -383,9 +386,9 @@ export default {
             });
         },
         getSortDirectionFaIcon() {
-            const revertedSort = this.filter.revertedSort;
+            const sort = this.filter.sort;
             let icon = 'sort-amount-down-alt';
-            if(revertedSort) {
+            if(sort === 'desc') {
                 icon = 'sort-amount-down';
             }
             return icon;
