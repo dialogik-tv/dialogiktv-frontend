@@ -63,19 +63,19 @@ export default {
         const color = d3.scaleOrdinal(data.map(d => d.category), d3.schemeCategory10);
 
         const x = d3.scaleLinear()
-            .domain(d3.extent(data, d => d.x)).nice()
+            .domain([0, 100]).nice()
             .range([margin.left, width - margin.right]);
 
         const y = d3.scaleLinear()
-            .domain(d3.extent(data, d => d.y)).nice()
+            .domain([0, 100]).nice()
             .range([height - margin.bottom, margin.top]);
 
         const svg = d3.select("#chart")
             .style("background-color", "#444")
+            .append("svg")
             .attr("height", height)
             .attr("width", width)
-            .append("svg")
-
+            
         svg.append("g")
             .call(xAxis);
 
