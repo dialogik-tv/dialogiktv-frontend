@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+    <script>
+    // http://bl.ocks.org/joews/9697914
+    // Simple animated example of d3-cloud - https://github.com/jasondavies/d3-cloud
+    // Based on https://github.com/jasondavies/d3-cloud/blob/master/examples/simple.html
+    const margin = { top: 0, left: 0, right: 0, bottom: 0 };
+    const height = window.innerHeight - margin.left - margin.right - 30;
+    const width  = window.innerWidth - margin.top - margin.bottom - 20;
+
+    // Encapsulate the word cloud functionality
+    function wordCloud(selector, min, max) {
+        var fill = d3.scale.category20();
+        // var fontSize = d3.scale.linear().domain([min, max]).range([15, 42]);
+
+        //Construct the word cloud's SVG element
+        var svg = d3.select(selector).append("svg")
+            .attr("width", width)
+            .attr("height", height)
+            .style("background-color", "#00acee")
+            .append("g")
+            .attr("transform", `translate(${width/2}, ${height/2})`);
+
+        //Draw the word cloud
+        function draw(words) {
+            var cloud = svg.selectAll("g text")
+                            .data(words, function(d) { return d.text; });
+
+            //Entering words
+            cloud.enter()
+                .append("text")
+                .style("font-family", "Arial")
+                .style("cursor", "pointer")
+                .style("fill", function(d, i) { return fill(i); })
+                // .style("font-size", function(d, i) { return fontSize(i) + "px" })
+                .attr("text-anchor", "middle")
+                .attr('font-size', 1)
+                .text(function(d) { return d.text; })
+                .on("click", function(d) {
+                    // New window/tab on Alt+click or Ctrl+click of Shift+click
+                    if(d3.event.altKey || d3.event.ctrlKey || d3.event.shiftKey) {
+                        window.open(`/tag/${d.text}`);
+                    } else {
+                        window.location.href = `/tag/${d.text}`
+                    }
+                    
+                })
+                .on("mouseover", function(d) {
+                    d3.select(this)
+                        .style("font-size", `${d.size + 20}px`)
+                        .style("z-index", "1")
+                        .style("font-weight", "600")
+                })
+                .on("mouseout", function(d) {
+                    d3.select(this)
+                        .style("font-size", `${d.size}px`)
+                        .style("z-index", "0")
+                        .style("font-weight", "normal")
+                });
+
+            //Entering and existing words
+            cloud
+                .transition()
+                    .duration(420)
+                    .style("font-size", function(d) { return `${d.size}px` })
+                    .attr("transform", function(d) {
+                        return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+                    })
+                    .style("fill-opacity", 1);
+
+            //Exiting words
+            cloud.exit()
+                .transition()
+                    .duration(200)
+                    .style('fill-opacity', 1e-6)
+                    .attr('font-size', 1)
+                    .remove();
+        }
+
+
+        // Use the module pattern to encapsulate the visualisation code. We'll
+        // expose only the parts that need to be public.
+        return {
+
+            // Recompute the word cloud for a new set of words. This method will
+            // asycnhronously call draw when the layout has been computed.
+            update: function(words) {
+                d3.layout.cloud().size([width, height])
+                    .words(words)
+                    .padding(5)
+                    .rotate(function() { return ~~(Math.random() * 2) * 90; })
+                    .font("Arial")
+                    .fontSize(function(d) { return d.size; })
+                    .on("end", draw)
+                    .start();
+            }
+        }
+    }
+
+    // Create word cloud
+    const words = fetch('https://dialogiktv-api.herokuapp.com/api/tags')
+        .then(response => response.json())
+        .then(tags => {
+            const words = [];
+            for(const tag of tags) {
+                const word = {
+                    text: tag.name,
+                    size: (tag.Tools.length + 20) || 20
+                };
+                if(word.size >= 20) {
+                    words.push(word);
+                }
+            }
+            const max = Math.max.apply(Math, words.map(function(w) { return w.size; }));
+            const min = Math.min.apply(Math, words.map(function(w) { return w.size; }));
+            const cloud = wordCloud('body', min, max);
+            cloud.update(words);
+        });
+</script>
