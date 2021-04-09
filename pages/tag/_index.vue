@@ -2,7 +2,8 @@
 export default {
     layout: 'redirect',
     created() {
-        this.$router.push(`/tools/${this.encodeFilter}`);
+        // Use replace() instead of push() to prevent history
+        this.$router.replace(`/tools/${this.encodeFilter}`);
     },
     computed: {
         encodeFilter: function() {
