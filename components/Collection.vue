@@ -75,18 +75,16 @@
                                 <div class="list-group-item mb-3">
                                     <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
                                     <div>
-                                        <n-link :to="`/tool/${tool.slug}`"><h5 class="card-title">{{ tool.title }}</h5></n-link>
-                                        <p v-if="tool.description" class="card-text text-muted">
-                                            <small v-if="tool.description.length > 120" v-html="$md.render(tool.description).substring(0, 120) + '...'"></small>
-                                            <small v-else v-html="$md.render(tool.description)"></small>
-                                        </p>
+                                        <div class="d-flex justify-content-between">
+                                            <n-link :to="`/tool/${tool.slug}`"><h5 class="card-title">{{ tool.title }}</h5></n-link>
+                                            <button v-if="$auth.loggedIn && $auth.user.id === collectionOwnerId" @click="removeToolFromCollection(tool)" class="btn btn-sm btn-success">aus Sammlung entfernen</button>
+                                        </div>
+                                        
+                                        <div v-if="tool.description" v-html="$md.render(tool.description)" class="collection-description card-text text-muted"></div>
                                     </div>
-                                    <ul>
-                                        <li v-if="$auth.loggedIn && $auth.user.id === collectionOwnerId">
-                                            <button @click="removeToolFromCollection(tool)" class="btn btn-sm btn-success">aus Sammlung entfernen</button>
-                                        </li>
-                                        <li v-for="tag in tool.Tags" :key="tag.name">
-                                            <n-link :to="`/tools/tag/${tag.name}`" class="badge badge-secondary mr-1">{{ tag.name }}</n-link>
+                                    <ul class="pl-0">
+                                        <li class="d-inline" v-for="tag in tool.Tags" :key="tag.name">
+                                            <n-link :to="`/tag/${tag.name}`" class="badge badge-secondary mr-1">{{ tag.name }}</n-link>
                                         </li>
                                     </ul>
                                     <!-- <div class="card-body">
@@ -246,5 +244,9 @@ export default {
 <style scoped>
 .tool-toogle-button-holder > button {
     width: 30px;
+}
+
+.collection-description {
+    font-size: .8em;
 }
 </style>
