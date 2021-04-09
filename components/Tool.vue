@@ -63,7 +63,7 @@
                             <!-- Tags -->
                             <div class="mb-3">
                                 <span v-for="tag in tool.Tags" :key="tag.name">
-                                    <n-link :to="`/tools/%7B%22term%22%3A%22%22%2C%22category%22%3A%5B%5D%2C%22tag%22%3A%5B%22${tag.name}%22%5D%2C%22sortBy%22%3A%22createdAt%22%2C%22sort%22%3Adesc%7D`" class="badge badge-secondary mr-1">{{ tag.name }}</n-link>
+                                    <n-link :to="`/tag/${tag.name}`" class="badge badge-secondary mr-1">{{ tag.name }}</n-link>
                                 </span>
                                 <span v-if="$auth.loggedIn">
                                     <input id="tag-input" list="tagInputList" v-model="tagInput" class="form-control form-control-sm w-auto d-inline" @keyup.enter="addTag" autofocus autocomplete="off" />

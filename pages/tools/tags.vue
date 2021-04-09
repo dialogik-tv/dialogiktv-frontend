@@ -14,7 +14,7 @@
                         <div class="row">
                             <div v-for="tag in filteredTags" :key="tag.name" class="col-md-4 col-lg-3">
                                 <div class="card bg-light text-muted p-3">
-                                    <n-link :to="`/tools/%7B%22term%22%3A%22%22%2C%22category%22%3A%5B%5D%2C%22tag%22%3A%5B%22${tag.name}%22%5D%2C%22sortBy%22%3A%22createdAt%22%2C%22sort%22%3Adesc%7D`" :style="getTagSize(tag)" class="d-flex justify-content-between">
+                                    <n-link :to="`/tag/${tag.name}`" :style="getTagSize(tag)" class="d-flex justify-content-between">
                                         {{ tag.name }}
                                         <span class="badge badge-primary">{{ tag.Tools.length }}</span>
                                     </n-link>
