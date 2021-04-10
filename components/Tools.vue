@@ -324,21 +324,29 @@ export default {
     computed: {
         // Encode filter to be ready for use in URL
         encodeFilter: function() {
-            return encodeURIComponent(JSON.stringify({
+            // return encodeURIComponent(JSON.stringify({
+            //     term: this.filter.term,
+            //     category: this.filter.category,
+            //     tag: this.filter.tag,
+            //     sortBy: this.filter.sortBy,
+            //     sort: this.filter.sort
+            // }))
+            const str = JSON.stringify({
                 term: this.filter.term,
                 category: this.filter.category,
                 tag: this.filter.tag,
                 sortBy: this.filter.sortBy,
                 sort: this.filter.sort
-            }))
+            }).substring(1).slice(0, -1);
+            return str;
         },
         // Decode filter from URL parameters
         decodeFilter() {
-            return JSON.parse(this.$route.params.search);
+            return JSON.parse("{" + this.$route.params.search + "}");
         },
         sortedTools() {
             // Make values static so we can use them later in the sort function
-            const sort   = this.filter.sort;
+            const sort   = this.filter.sort; // asc/desc
             const sortBy = this.filter.sortBy;
 
             // Define our labels
@@ -402,7 +410,7 @@ export default {
             // Fetch search parameters
             if('search' in this.$route.params) {
                 if(this.filter.category.length > 0 || this.filter.tag.length > 0 || this.filter.term.length > 0) {
-                    url = `${url}/${this.encodeFilter}`;
+                    url = `${url}/${encodeURIComponent("{" + this.encodeFilter + "}")}`;
                 }
             }
             const { data } = await this.$axios.get(url);
