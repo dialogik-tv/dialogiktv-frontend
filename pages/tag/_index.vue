@@ -7,13 +7,13 @@ export default {
     },
     computed: {
         encodeFilter: function() {
-            return encodeURIComponent(JSON.stringify({
+            return JSON.stringify({
                 term: '',
                 category: [],
                 tag: [this.$route.params.index],
                 sortBy: 'createdAt',
                 sort: 'desc'
-            }))
+            }).substring(1).slice(0, -1);
         }
     }
 }
