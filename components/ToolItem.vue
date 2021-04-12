@@ -207,15 +207,17 @@ export default {
             const tag = this.tagInput;
             const url = `${process.env.API_URL}/tag/create`;
             try {
-                const check = this.tool.Tags.filter(obj => Object.keys(obj).some(key => obj[key].includes(tag)));
-                if(check.length < 1) {
+                const check = this.tool.Tags.filter(t => t.name === tag);
+                if(check < 1) {
                     const { data } = await this.$axios.post(url, {
                         tool: this.tool.id,
                         tag: tag
                     });
                     this.tool.Tags.push( {name: tag} );
+                    this.tagInput = null;
+                } else {
+                    alert('This tag does already exist. Chose another one.');
                 }
-                this.tagInput = null;
             } catch (e) {
                 const text = 'Error adding tag';
                 alert(text);
