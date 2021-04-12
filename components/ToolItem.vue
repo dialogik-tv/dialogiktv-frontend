@@ -173,6 +173,7 @@ export default {
             const slug = this.$route.params.slug;
             const url = `${process.env.API_URL}/tool/${slug}`;
             const { data } = await this.$axios.get(url);
+
             this.tool = data;
 
             // Determine selected value chain phases
@@ -187,7 +188,11 @@ export default {
                 found = null;
             }
         } catch (e) {
-            console.log(e);
+            if(e.response.status && e.response.status === 404) {
+                this.$nuxt.context.error({ statusCode: 404, message: 'Post not found' });
+            } else {
+                console.log({e});
+            }
         }
     },
     computed: {
@@ -235,6 +240,10 @@ export default {
                     vendorLink: this.tool.vendorLink,
                     docLink: this.tool.docLink
                 })
+                if(this.tool.slug !== data.slug) {
+                    alert('SLUG haschanged...');
+                    // error({ statusCode: 404, message: 'Post not found' })
+                }
             } catch(e) {
                 console.error('Error', e);
             }
