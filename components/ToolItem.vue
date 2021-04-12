@@ -91,7 +91,7 @@
                                 <h4 class="mt-5">Dokumentation</h4>
                                 <b-form-input v-model="tool.docLink" @keyup.enter="updateTool" placeholder="Link zur Dokumentation"></b-form-input>
 
-                                <CategorySelector @update-category-relevance:tool="onEvent" @update-category:tool="onEvent" v-if="$auth.user.isAdmin" :tool="tool" />
+                                <category-selector @update-category-relevance:tool="onEvent" @update-category:tool="onEvent" v-if="$auth.user.isAdmin" :tool="tool" />
                             </div>
                         </div>
 
@@ -124,7 +124,7 @@
                     </div>
                 </div>
                 
-                <SimilarTools :tool-id="tool.id" />
+                <smiliar-tools :tool-id="tool.id" />
             </div>
         </div>
     </div>

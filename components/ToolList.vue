@@ -34,7 +34,7 @@
                             <b-card-body>
                                 <b-card-text>
                                     <div class="p-md-3">
-                                        <ValueChain
+                                        <value-chain
                                             :selected="filter.category"
                                             :filterString="encodeFilter"
                                             @pushCategoryToFilter="pushCategoryToFilter"

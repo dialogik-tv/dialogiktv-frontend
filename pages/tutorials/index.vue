@@ -1,17 +1,17 @@
 <template>
     <div>
         <div class="container">
-            <Tutorials />
+            <tutorial-list />
         </div>
     </div>
 </template>
 
 <script>
-import Tutorials from '~/components/Tutorials.vue';
+import TutorialList from '~/components/TutorialList.vue';
 
 export default {
     components: {
-        Tutorials
+        TutorialList
     }
 }
 </script>
