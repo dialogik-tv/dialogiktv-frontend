@@ -8,14 +8,14 @@
                     <b-alert variant="danger" show><strong>Fehler:</strong> {{ error }}</b-alert>
                 </div>
 
-                <UserAuthForm buttonText="Login" :submitForm="loginUser" />
+                <user-auth-form buttonText="Login" :submitForm="loginUser" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import UserAuthForm from '@/components/UserAuthForm';
+import UserAuthForm from '~/components/UserAuthForm.vue';
 
 export default {
     layout: 'landing',

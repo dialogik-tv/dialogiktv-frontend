@@ -1,17 +1,17 @@
 <template>
     <div>
         <div class="container">
-            <Collections />
+            <collection-list />
         </div>
     </div>
 </template>
 
 <script>
-import Collections from '~/components/Collections.vue';
+import CollectionList from '~/components/CollectionList.vue';
 
 export default {
     components: {
-        Collections
+        CollectionList
     }
 }
 </script>

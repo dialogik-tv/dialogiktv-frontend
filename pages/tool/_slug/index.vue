@@ -1,17 +1,17 @@
 <template>
     <div>
         <div class="container">
-            <Tool />
+            <tool-item />
         </div>
     </div>
 </template>
 
 <script>
-import Tool from '~/components/Tool.vue';
+import ToolItem from '~/components/ToolItem.vue';
 
 export default {
     components: {
-        Tool
+        ToolItem
     }
 }
 </script>

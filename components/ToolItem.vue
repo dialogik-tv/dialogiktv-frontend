@@ -91,7 +91,7 @@
                                 <h4 class="mt-5">Dokumentation</h4>
                                 <b-form-input v-model="tool.docLink" @keyup.enter="updateTool" placeholder="Link zur Dokumentation"></b-form-input>
 
-                                <CategorySelector @update-category-relevance:tool="onEvent" @update-category:tool="onEvent" v-if="$auth.user.isAdmin" :tool="tool" />
+                                <category-selector @update-category-relevance:tool="onEvent" @update-category:tool="onEvent" v-if="$auth.user.isAdmin" :tool="tool" />
                             </div>
                         </div>
 
@@ -124,7 +124,7 @@
                     </div>
                 </div>
                 
-                <SimilarTools :tool-id="tool.id" />
+                <smiliar-tools :tool-id="tool.id" />
             </div>
         </div>
     </div>
@@ -173,6 +173,7 @@ export default {
             const slug = this.$route.params.slug;
             const url = `${process.env.API_URL}/tool/${slug}`;
             const { data } = await this.$axios.get(url);
+
             this.tool = data;
 
             // Determine selected value chain phases
@@ -187,7 +188,11 @@ export default {
                 found = null;
             }
         } catch (e) {
-            console.log(e);
+            if(e.response.status && e.response.status === 404) {
+                this.$nuxt.context.error({ statusCode: 404, message: 'Post not found' });
+            } else {
+                console.log({e});
+            }
         }
     },
     computed: {
@@ -207,15 +212,17 @@ export default {
             const tag = this.tagInput;
             const url = `${process.env.API_URL}/tag/create`;
             try {
-                const check = this.tool.Tags.filter(obj => Object.keys(obj).some(key => obj[key].includes(tag)));
-                if(check.length < 1) {
+                const check = this.tool.Tags.filter(t => t.name === tag);
+                if(check < 1) {
                     const { data } = await this.$axios.post(url, {
                         tool: this.tool.id,
                         tag: tag
                     });
                     this.tool.Tags.push( {name: tag} );
+                    this.tagInput = null;
+                } else {
+                    alert('This tag does already exist. Chose another one.');
                 }
-                this.tagInput = null;
             } catch (e) {
                 const text = 'Error adding tag';
                 alert(text);
@@ -233,6 +240,10 @@ export default {
                     vendorLink: this.tool.vendorLink,
                     docLink: this.tool.docLink
                 })
+                if(this.tool.slug !== data.slug) {
+                    alert('SLUG haschanged...');
+                    // error({ statusCode: 404, message: 'Post not found' })
+                }
             } catch(e) {
                 console.error('Error', e);
             }

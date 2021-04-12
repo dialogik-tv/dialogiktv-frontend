@@ -2,7 +2,7 @@
     <div>
         <b-navbar toggleable="md" :variant="variant" :type="type">
             <b-navbar-brand href="/">
-                <LogoDark class="logo" />
+                <logo-item class="logo" :dark="true" />
             </b-navbar-brand>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -48,15 +48,13 @@
 </template>
 
 <script>
-import LogoDark from '~/components/LogoDark.vue';
-import Logo from '~/components/Logo.vue';
+import LogoItem from '~/components/LogoItem.vue';
 
 export default {
     layout: 'landing',
     props: ['type', 'variant'],
     components: {
-        Logo,
-        LogoDark
+        LogoItem
     }
 }
 </script>
