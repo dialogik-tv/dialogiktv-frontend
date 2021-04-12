@@ -79,8 +79,17 @@ export default {
     async fetch() {
         const id  = this.$route.params.id;
         const url = `${process.env.API_URL}/tutorial/${id}`;
-        const { data } = await this.$axios.get(url);
-        this.tutorial = data;
+        
+        try {
+            const { data } = await this.$axios.get(url);
+            this.tutorial = data;
+        } catch(e) {
+            if(e.response.status && e.response.status === 404) {
+                this.$nuxt.context.error({ statusCode: 404, message: 'Post not found' });
+            } else {
+                console.log({e});
+            }
+        }
     },
     methods: {
         async updateTutorial() {

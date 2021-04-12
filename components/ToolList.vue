@@ -34,7 +34,7 @@
                             <b-card-body>
                                 <b-card-text>
                                     <div class="p-md-3">
-                                        <ValueChain
+                                        <value-chain
                                             :selected="filter.category"
                                             :filterString="encodeFilter"
                                             @pushCategoryToFilter="pushCategoryToFilter"
@@ -171,7 +171,7 @@ export default {
                 category: [],
                 tag: [],
                 sortBy: 'createdAt',
-                sort: 'asc',
+                sort: 'desc',
                 labels: {
                     'views': {
                         'label': 'Views',

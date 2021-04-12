@@ -1,17 +1,17 @@
 <template>
     <div>
         <div class="container-fluid">
-            <Tools />
+            <tool-list />
         </div>
     </div>
 </template>
 
 <script>
-import Tools from '~/components/Tools.vue';
+import ToolList from '~/components/ToolList.vue';
 
 export default {
     components: {
-        Tools
+        ToolList
     }
 }
 </script>

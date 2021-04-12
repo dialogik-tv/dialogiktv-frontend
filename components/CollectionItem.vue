@@ -122,18 +122,27 @@ export default {
     async fetch() {
         const id  = this.$route.params.id;
         const url = `${process.env.API_URL}/collection/${id}`;
-        const { data } = await this.$axios.get(url);
-        const names = [];
-        for(const [key, value] of Object.entries(data.Tools)) {
-            names.push(value.title);
-        }
 
-        for(const [key, value] of Object.entries(this.tools)) {
-            if(names.indexOf(value.title) !== -1) {
-                value.added = true;
+        try {
+            const { data } = await this.$axios.get(url);
+            const names = [];
+            for(const [key, value] of Object.entries(data.Tools)) {
+                names.push(value.title);
+            }
+
+            for(const [key, value] of Object.entries(this.tools)) {
+                if(names.indexOf(value.title) !== -1) {
+                    value.added = true;
+                }
+            }
+            this.collection = data;
+        } catch(e) {
+            if(e.response.status && e.response.status === 404) {
+                this.$nuxt.context.error({ statusCode: 404, message: 'Post not found' });
+            } else {
+                console.log({e});
             }
         }
-        this.collection = data;
     },
     methods: {
         async fetchTools() {

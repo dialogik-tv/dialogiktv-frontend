@@ -8,14 +8,14 @@
                     <b-alert variant="danger" show><strong>Fehler:</strong> {{ error }}</b-alert>
                 </div>
 
-                <UserAuthForm buttonText="Registrieren" :submitForm="registerUser" :isRegistration="true" />
+                <user-auth-form buttonText="Registrieren" :submitForm="registerUser" :isRegistration="true" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import UserAuthForm from '@/components/UserAuthForm';
+import UserAuthForm from '~/components/UserAuthForm.vue';
 
 export default {
     layout: 'landing',
