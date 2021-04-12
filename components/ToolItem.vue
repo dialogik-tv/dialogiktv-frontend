@@ -240,9 +240,10 @@ export default {
                     vendorLink: this.tool.vendorLink,
                     docLink: this.tool.docLink
                 })
+                
+                // Redirect if slug has changed
                 if(this.tool.slug !== data.slug) {
-                    alert('SLUG haschanged...');
-                    // error({ statusCode: 404, message: 'Post not found' })
+                    this.$router.push(`/tool/${data.slug}`);
                 }
             } catch(e) {
                 console.error('Error', e);
