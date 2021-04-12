@@ -171,7 +171,7 @@ export default {
                 category: [],
                 tag: [],
                 sortBy: 'createdAt',
-                sort: 'asc',
+                sort: 'desc',
                 labels: {
                     'views': {
                         'label': 'Views',
