@@ -12,7 +12,7 @@
                     <li class="list-group-item text-body py-3" v-for="tool in tools" :key="tool.id">
                         <b-row>
                             <b-col md="8">
-                                <div class="h4 mb-0">{{ tool.title }}</div>
+                                <n-link class="h4 mb-0" :to="`/tool/${tool.slug}`">{{ tool.title }}</n-link>
                                 <small class="text-muted">Gepostet von {{ tool.User.username }} am {{ tool.createdAt }}</small>
                             </b-col>
                             <b-col md="4" class="text-md-right mt-4 mt-md-0">
@@ -70,7 +70,3 @@ export default {
     }
 }
 </script>
-
-<style scoped>
-
-</style>
