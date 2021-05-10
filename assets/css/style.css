@@ -27,6 +27,10 @@ h1, h2, h3, h4, h5, h6 {
     letter-spacing: -2px;
 }
 
+#main img {
+    max-width: 100%;
+}
+
 /* roll-down */
 .roll-down-leave-active,
 .roll-down-enter-active,
