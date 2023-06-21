@@ -29,7 +29,7 @@
         "dotenv": "^8.2.0",
         "express": "^4.16.4",
         "lodash": "^4.17.21",
-        "nuxt": "^2.15.3",
+        "nuxt": "^3.4.3",
         "redirect-ssl": "^2.0.0",
         "vue-textarea-autosize": "^1.1.1",
         "vuelidate": "^0.7.6"
